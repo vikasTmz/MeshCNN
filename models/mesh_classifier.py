@@ -43,6 +43,9 @@ class ClassifierModel:
             self.load_network(opt.which_epoch)
 
     def set_input(self, data):
+        #print("edge_features: ",len(data['edge_features']))
+        #print("label: ",data['label'])
+        #print("soft_label: ",data['soft_label'])
         input_edge_features = torch.from_numpy(data['edge_features']).float()
         labels = torch.from_numpy(data['label']).long()
         # set inputs

@@ -59,7 +59,7 @@ class Process:
 
     def export_obj(self, mesh, export_name):
         outpath = os.path.dirname(export_name)
-        if not os.path.isdir(outpath): os.makedirs(outpath)
+        #if not os.path.isdir(outpath): os.makedirs(outpath)
         print('EXPORTING', export_name)
         bpy.ops.object.select_all(action='DESELECT')
         mesh.select_set(state=True)
