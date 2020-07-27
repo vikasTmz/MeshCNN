@@ -4,12 +4,12 @@ from os.path import join
 from util.util import seg_accuracy, print_network
 
 
-class ClassifierModel:
+class TexturizeModel:
     """ Class for training Model weights
 
     :args opt: structure containing configuration params
     e.g.,
-    --dataset_mode -> classification / segmentation)
+    --dataset_mode -> texturize)
     --arch -> network type
     """
     def __init__(self, opt):
@@ -52,8 +52,8 @@ class ClassifierModel:
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)
         self.mesh = data['mesh']
-        if self.opt.dataset_mode == 'segmentation' and not self.is_train:
-            self.soft_label = torch.from_numpy(data['soft_label'])
+        # if self.opt.dataset_mode == 'segmentation' and not self.is_train:
+            # self.soft_label = torch.from_numpy(data['soft_label'])
 
 
     def forward(self):
@@ -61,7 +61,10 @@ class ClassifierModel:
         return out
 
     def backward(self, out):
+        print("len out: ",len(out))
         self.loss = self.criterion(out, self.labels)
+        if self.opt.dataset_mode == "texturize":
+            self.loss *= self.opt.lambda_L1
         self.loss.backward()
 
     def optimize_parameters(self):
@@ -112,21 +115,21 @@ class ClassifierModel:
         with torch.no_grad():
             out = self.forward()
             # compute number of correct
-            pred_class = out.data.max(1)[1]
+            # pred_class = out.data.max(1)[1]
             label_class = self.labels
-            self.export_segmentation(pred_class.cpu())
-            correct = self.get_accuracy(pred_class, label_class)
-        return correct, len(label_class)
+            # self.export_segmentation(pred_class.cpu())
+            correct = 0#self.get_accuracy(pred_class, label_class)
+        return correct, len(label_class), out.cpu().detach().numpy()
 
-    def get_accuracy(self, pred, labels):
-        """computes accuracy for classification / segmentation """
-        if self.opt.dataset_mode == 'classification':
-            correct = pred.eq(labels).sum()
-        elif self.opt.dataset_mode == 'segmentation':
-            correct = seg_accuracy(pred, self.soft_label, self.mesh)
-        return correct
+    # def get_accuracy(self, pred, labels):
+    #     """computes accuracy for classification / segmentation """
+    #     if self.opt.dataset_mode == 'classification':
+    #         correct = pred.eq(labels).sum()
+    #     elif self.opt.dataset_mode == 'segmentation':
+    #         correct = seg_accuracy(pred, self.soft_label, self.mesh)
+    #     return correct
 
-    def export_segmentation(self, pred_seg):
-        if self.opt.dataset_mode == 'segmentation':
-            for meshi, mesh in enumerate(self.mesh):
-                mesh.export_segments(pred_seg[meshi, :])
+    # def export_segmentation(self, pred_seg):
+    #     if self.opt.dataset_mode == 'segmentation':
+    #         for meshi, mesh in enumerate(self.mesh):
+    #             mesh.export_segments(pred_seg[meshi, :])

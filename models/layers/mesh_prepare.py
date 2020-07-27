@@ -306,7 +306,9 @@ def set_edge_lengths(mesh, edge_points=None):
         edge_points = get_edge_points(mesh)
     edge_lengths = np.linalg.norm(mesh.vs[edge_points[:, 0]] - mesh.vs[edge_points[:, 1]], ord=2, axis=1)
     mesh.edge_lengths = edge_lengths
-
+    print("===================== Mesh edge vertex index: ===========================================================")
+    for i in range(len(edge_lengths)):
+        print(mesh.vs[edge_points[i, 0]], mesh.vs[edge_points[i, 1]])
 
 def extract_features(mesh):
     features = []

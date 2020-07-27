@@ -10,6 +10,9 @@ def CreateDataset(opt):
     elif opt.dataset_mode == 'classification':
         from data.classification_data import ClassificationData
         dataset = ClassificationData(opt)
+    elif opt.dataset_mode == 'texturize':
+        from data.texturize_data import TexturizeData
+        dataset = TexturizeData(opt)
     return dataset
 
 
