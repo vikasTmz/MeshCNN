@@ -115,8 +115,7 @@ class TexturizeModel:
         """
         with torch.no_grad():
             out = self.forward()
-            pred_class = out.data.max(1)
-            print(pred_class)
+            print(out.shape)
             out = torch.reshape(out,self.labels.shape)
             # compute number of correct
             
