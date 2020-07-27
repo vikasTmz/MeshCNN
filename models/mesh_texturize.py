@@ -116,8 +116,11 @@ class TexturizeModel:
         with torch.no_grad():
             out = self.forward()
             out = torch.reshape(out,self.labels.shape)
+            # compute number of correct
             
-        return out.cpu().detach().numpy()
+            label_class = self.labels
+            # self.export_segmentation(pred_class.cpu())
+        return 1, 1, out.cpu().detach().numpy()
 
     # def get_accuracy(self, pred, labels):
     #     """computes accuracy for classification / segmentation """
