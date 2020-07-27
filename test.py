@@ -2,7 +2,7 @@ from options.test_options import TestOptions
 from data import DataLoader
 from models import create_model
 from util.writer import Writer
-
+import numpy as np
 
 def run_test(epoch=-1):
     print('Running Test')
