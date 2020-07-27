@@ -61,6 +61,7 @@ class ClassifierModel:
         return out
 
     def backward(self, out):
+        print("len out: ",len(out))
         self.loss = self.criterion(out, self.labels)
         if self.opt.dataset_mode == "texturize":
             self.loss *= self.opt.lambda_L1
