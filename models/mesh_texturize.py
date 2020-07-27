@@ -61,7 +61,7 @@ class TexturizeModel:
         return out
 
     def backward(self, out):
-        torch.reshape(out,self.labels.shape)
+        out = torch.reshape(out,self.labels.shape)
         print("len out: ",out.shape, self.labels.shape)
         self.loss = self.criterion(out, self.labels)
         if self.opt.dataset_mode == "texturize":
@@ -115,7 +115,7 @@ class TexturizeModel:
         """
         with torch.no_grad():
             out = self.forward()
-            torch.reshape(out,self.labels.shape)
+            out = torch.reshape(out,self.labels.shape)
             # compute number of correct
             # pred_class = out.data.max(1)[1]
             label_class = self.labels
