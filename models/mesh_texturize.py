@@ -62,6 +62,7 @@ class TexturizeModel:
 
     def backward(self, out):
         print("len out: ",out.shape, self.labels.shape)
+        print(out[0], self.labels[0])
         self.loss = self.criterion(out, self.labels)
         if self.opt.dataset_mode == "texturize":
             self.loss *= self.opt.lambda_L1
