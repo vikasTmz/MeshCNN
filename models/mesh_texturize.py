@@ -116,8 +116,9 @@ class TexturizeModel:
         with torch.no_grad():
             out = self.forward()
             out = torch.reshape(out,self.labels.shape)
-
-        return torch.nn.L1Loss(out[0], self.labels[0]), 1, out.cpu().detach().numpy()
+            correct = torch.nn.L1Loss(out, self.labels)
+            print("correct : ", correct)
+        return correct, 1, out.cpu().detach().numpy()
 
     # def get_accuracy(self, pred, labels):
     #     correct = seg_accuracy(pred, labels, self.mesh)
