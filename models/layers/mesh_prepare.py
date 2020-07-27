@@ -308,7 +308,7 @@ def set_edge_lengths(mesh, edge_points=None):
     mesh.edge_lengths = edge_lengths
     print("===================== Mesh edge vertex index: START ===========================================================")
     for i in range(len(edge_lengths)):
-        print(i, edge_points[i, 0], edge_points[i, 1])
+        print(i, edge_points[i, 0], edge_points[i, 1], mesh.vs[edge_points[i, 0]], mesh.vs[edge_points[i, 1]])
     print("===================== Mesh edge vertex index: END ===========================================================")
 
 def extract_features(mesh):
