@@ -116,7 +116,7 @@ class TexturizeModel:
         with torch.no_grad():
             out = self.forward()
             out = torch.reshape(out,self.labels.shape)
-            correct = torch.nn.L1Loss(out[0], self.labels[0])
+            correct = torch.nn.L1Loss()(out, self.labels)
             print("correct : ", correct)
         return correct, 1, out.cpu().detach().numpy()
 
