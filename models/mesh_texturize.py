@@ -119,13 +119,9 @@ class TexturizeModel:
             correct = self.get_accuracy(out, self.labels)
         return correct, len(self.labels), out.cpu().detach().numpy()
 
-    # def get_accuracy(self, pred, labels):
-    #     """computes accuracy for classification / segmentation """
-    #     if self.opt.dataset_mode == 'classification':
-    #         correct = pred.eq(labels).sum()
-    #     elif self.opt.dataset_mode == 'segmentation':
-    #         correct = seg_accuracy(pred, self.soft_label, self.mesh)
-    #     return correct
+    def get_accuracy(self, pred, labels):
+        correct = seg_accuracy(pred, labels, self.mesh)
+        return correct
 
     # def export_segmentation(self, pred_seg):
     #     if self.opt.dataset_mode == 'segmentation':
