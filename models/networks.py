@@ -114,7 +114,7 @@ def define_loss(opt):
     if opt.dataset_mode == 'classification':
         loss = torch.nn.CrossEntropyLoss()
     elif opt.dataset_mode == 'segmentation':
-        loss = torch.nn.CrossEntropyLoss(ignore_index=-1)
+        loss = torch.nn.L1Loss()
     elif opt.dataset_mode == "texturize":
         loss = torch.nn.L1Loss()
     return loss
