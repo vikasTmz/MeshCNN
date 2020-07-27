@@ -17,7 +17,7 @@ class TexturizeData(BaseDataset):
         self.seg_paths = self.get_seg_files(self.paths, os.path.join(self.root, 'colors'), seg_ext='.color')
         # self.sseg_paths = self.get_seg_files(self.paths, os.path.join(self.root, 'sseg'), seg_ext='.seseg')
         # self.classes, self.offset = self.get_n_segs(os.path.join(self.root, 'classes.txt'), self.seg_paths)
-        self.nclasses = 3
+        self.nclasses = opt.ninput_edges
         self.size = len(self.paths)
         self.get_mean_std()
         # # modify for network later.
