@@ -309,7 +309,7 @@ def set_edge_lengths(mesh, edge_points=None):
     print("===================== Mesh edge vertex index: START ===========================================================")
     f = open("temp.txt",'w')
     for i in range(len(edge_lengths)):
-        f.write(str(mesh.vs[edge_points[i, 0]]) + ' ; ' + str(mesh.vs[edge_points[i, 1]]))
+        f.write(str(mesh.vs[edge_points[i, 0]]) + ' ; ' + str(mesh.vs[edge_points[i, 1]]) + '\n')
     f.close()
     print("===================== Mesh edge vertex index: END ===========================================================")
 
