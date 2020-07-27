@@ -5,4 +5,4 @@ def create_model(opt):
 	elif opt.dataset_mode == 'texturize':
 		from .mesh_texturize import TexturizeModel
 		model = TexturizeModel(opt)
-    return model
+	return model
