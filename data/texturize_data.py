@@ -86,7 +86,7 @@ class TexturizeData(BaseDataset):
 
 def read_edgecolor(ecolor_file):
     edge_colors = np.loadtxt(open(ecolor_file, 'r'), dtype='float64')
-    edge_colors = np.array(edge_colors > 0, dtype=np.int32)
+    # edge_colors = np.array(edge_colors > 0, dtype=np.int32)
     return edge_colors
 
 # def read_sseg(sseg_file):
