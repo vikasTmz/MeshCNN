@@ -43,17 +43,12 @@ class TexturizeModel:
             self.load_network(opt.which_epoch)
 
     def set_input(self, data):
-        #print("edge_features: ",len(data['edge_features']))
-        #print("label: ",data['label'])
-        #print("soft_label: ",data['soft_label'])
         input_edge_features = torch.from_numpy(data['edge_features']).float()
         labels = torch.from_numpy(data['label']).float()
         # set inputs
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)
         self.mesh = data['mesh']
-        # if self.opt.dataset_mode == 'segmentation' and not self.is_train:
-            # self.soft_label = torch.from_numpy(data['soft_label'])
 
 
     def forward(self):
@@ -63,8 +58,6 @@ class TexturizeModel:
     def backward(self, out):
         out = torch.reshape(out,self.labels.shape)
         print("len out: ",out.shape, self.labels.shape)
-        print("self.labels: ", self.labels)
-        print("out: ", out)
         self.loss = self.criterion(out, self.labels)
         if self.opt.dataset_mode == "texturize":
             self.loss *= self.opt.lambda_L1
