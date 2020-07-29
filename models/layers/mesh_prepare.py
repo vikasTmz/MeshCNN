@@ -16,7 +16,7 @@ def fill_mesh(mesh2fill, file: str, opt):
                             edge_lengths=mesh_data.edge_lengths, edge_areas=mesh_data.edge_areas,
                             features=mesh_data.features)
     mesh2fill.vs = mesh_data['vs']
-    mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
+    # mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
     mesh2fill.edges = mesh_data['edges']
     mesh2fill.gemm_edges = mesh_data['gemm_edges']
     mesh2fill.edges_count = int(mesh_data['edges_count'])
@@ -27,7 +27,7 @@ def fill_mesh(mesh2fill, file: str, opt):
     mesh2fill.edge_areas = mesh_data['edge_areas']
     mesh2fill.features = mesh_data['features']
     mesh2fill.sides = mesh_data['sides']
-    mesh2fill.edge_colors = mesh_data['edge_colors']
+    # mesh2fill.edge_colors = mesh_data['edge_colors']
 
 def get_mesh_path(file: str, num_aug: int):
     filename, _ = os.path.splitext(file)
