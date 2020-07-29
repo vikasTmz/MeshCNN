@@ -31,6 +31,7 @@ class TexturizeData(BaseDataset):
         meta['mesh'] = mesh
         # label = read_edgecolor(self.seg_paths[index])# - self.offset
         label = mesh.edge_colors
+        print(label.shape)
         label = pad(label, self.opt.ninput_edges, val=-1, dim=0)
         meta['label'] = label
         # soft_label = read_sseg(self.sseg_paths[index])
