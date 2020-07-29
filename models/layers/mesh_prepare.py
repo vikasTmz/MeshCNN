@@ -16,7 +16,7 @@ def fill_mesh(mesh2fill, file: str, opt):
                             edge_lengths=mesh_data.edge_lengths, edge_areas=mesh_data.edge_areas,
                             features=mesh_data.features)
     mesh2fill.vs = mesh_data['vs']
-    # mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
+    mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
     mesh2fill.edges = mesh_data['edges']
     mesh2fill.gemm_edges = mesh_data['gemm_edges']
     mesh2fill.edges_count = int(mesh_data['edges_count'])
@@ -233,8 +233,7 @@ def flip_edges(mesh, prct, faces):
     edge_count, edge_faces, edges_dict = get_edge_faces(faces)
     dihedral = angles_from_faces(mesh, edge_faces[:, 2:], faces)
     edges2flip = np.random.permutation(edge_count)
-    # print(dihedral.min())
-    # print(dihedral.max())
+
     target = int(prct * edge_count)
     flipped = 0
     for edge_key in edges2flip:
@@ -322,7 +321,7 @@ def get_edge_colors(mesh):
     edge_colors = []
     edge_points = get_edge_points(mesh)
     edge_lengths = np.linalg.norm(mesh.vs[edge_points[:, 0]] - mesh.vs[edge_points[:, 1]], ord=2, axis=1)
-    print(mesh.vs)
+    print(mesh.colors)
     for i in range(len(edge_lengths)):
         avg_color = [(mesh.colors[edge_points[i, 0]][0] + mesh.colors[edge_points[i, 1]][0]) / 2, 
                      (mesh.colors[edge_points[i, 0]][1] + mesh.colors[edge_points[i, 1]][1]) / 2,
