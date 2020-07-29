@@ -64,7 +64,7 @@ def from_scratch(file, opt):
     if opt.num_aug > 1:
         post_augmentation(mesh_data, opt)
     mesh_data.features = extract_features(mesh_data)
-    mesh_data.edge_colors = get_edge_colors(mesh_data)
+    # mesh_data.edge_colors = get_edge_colors(mesh_data)
     return mesh_data
 
 def fill_from_file(mesh, file):

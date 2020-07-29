@@ -14,7 +14,7 @@ class TexturizeData(BaseDataset):
         self.root = opt.dataroot
         self.dir = os.path.join(opt.dataroot, opt.phase)
         self.paths = self.make_dataset(self.dir)
-        # self.seg_paths = self.get_seg_files(self.paths, os.path.join(self.root, 'colors'), seg_ext='.color')
+        self.seg_paths = self.get_seg_files(self.paths, os.path.join(self.root, 'colors'), seg_ext='.color')
         # self.sseg_paths = self.get_seg_files(self.paths, os.path.join(self.root, 'sseg'), seg_ext='.seseg')
         # self.classes, self.offset = self.get_n_segs(os.path.join(self.root, 'classes.txt'), self.seg_paths)
         self.nclasses = 3
@@ -29,8 +29,8 @@ class TexturizeData(BaseDataset):
         mesh = Mesh(file=path, opt=self.opt, hold_history=True, export_folder=self.opt.export_folder)
         meta = {}
         meta['mesh'] = mesh
-        # label = read_edgecolor(self.seg_paths[index])# - self.offset
-        label = mesh.edge_colors
+        label = read_edgecolor(self.seg_paths[index])# - self.offset
+        # label = mesh.edge_colors
         print(label.shape)
         label = pad(label, self.opt.ninput_edges, val=-1, dim=0)
         meta['label'] = label
