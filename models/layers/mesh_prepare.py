@@ -10,12 +10,13 @@ def fill_mesh(mesh2fill, file: str, opt):
         mesh_data = np.load(load_path, encoding='latin1', allow_pickle=True)
     else:
         mesh_data = from_scratch(file, opt)
-        np.savez_compressed(load_path, gemm_edges=mesh_data.gemm_edges, vs=mesh_data.vs, edges=mesh_data.edges,
+        np.savez_compressed(load_path, gemm_edges=mesh_data.gemm_edges, vs=mesh_data.vs, colors=mesh_data.colors, edges=mesh_data.edges,
                             edges_count=mesh_data.edges_count, ve=mesh_data.ve, v_mask=mesh_data.v_mask,
                             filename=mesh_data.filename, sides=mesh_data.sides,
                             edge_lengths=mesh_data.edge_lengths, edge_areas=mesh_data.edge_areas,
                             features=mesh_data.features)
     mesh2fill.vs = mesh_data['vs']
+    mesh2fill.colors = mesh_data['colors']
     mesh2fill.edges = mesh_data['edges']
     mesh2fill.gemm_edges = mesh_data['gemm_edges']
     mesh2fill.edges_count = int(mesh_data['edges_count'])
@@ -44,7 +45,7 @@ def from_scratch(file, opt):
             return eval('self.' + item)
 
     mesh_data = MeshPrep()
-    mesh_data.vs = mesh_data.edges = None
+    mesh_data.vs = mesh_data.edges = mesh_data.colors = None
     mesh_data.gemm_edges = mesh_data.sides = None
     mesh_data.edges_count = None
     mesh_data.ve = None
@@ -52,7 +53,7 @@ def from_scratch(file, opt):
     mesh_data.filename = 'unknown'
     mesh_data.edge_lengths = None
     mesh_data.edge_areas = []
-    mesh_data.vs, faces = fill_from_file(mesh_data, file)
+    mesh_data.vs, faces, mesh_data.colors = fill_from_file(mesh_data, file)
     mesh_data.v_mask = np.ones(len(mesh_data.vs), dtype=bool)
     faces, face_areas = remove_non_manifolds(mesh_data, faces)
     if opt.num_aug > 1:
@@ -66,7 +67,7 @@ def from_scratch(file, opt):
 def fill_from_file(mesh, file):
     mesh.filename = ntpath.split(file)[1]
     mesh.fullfilename = file
-    vs, faces = [], []
+    vs, faces, colors = [], [], []
     f = open(file)
     for line in f:
         line = line.strip()
@@ -75,6 +76,7 @@ def fill_from_file(mesh, file):
             continue
         elif splitted_line[0] == 'v':
             vs.append([float(v) for v in splitted_line[1:4]])
+            colors.append(float(c) for c in splitted_line[4:7])
         elif splitted_line[0] == 'f':
             face_vertex_ids = [int(c.split('/')[0]) for c in splitted_line[1:]]
             assert len(face_vertex_ids) == 3
@@ -83,9 +85,10 @@ def fill_from_file(mesh, file):
             faces.append(face_vertex_ids)
     f.close()
     vs = np.asarray(vs)
+    colors = np.asarray(colors)
     faces = np.asarray(faces, dtype=int)
     assert np.logical_and(faces >= 0, faces < len(vs)).all()
-    return vs, faces
+    return vs, faces, colors
 
 
 def remove_non_manifolds(mesh, faces):
@@ -307,12 +310,21 @@ def set_edge_lengths(mesh, edge_points=None):
     edge_lengths = np.linalg.norm(mesh.vs[edge_points[:, 0]] - mesh.vs[edge_points[:, 1]], ord=2, axis=1)
     mesh.edge_lengths = edge_lengths
     # print("===================== Mesh edge vertex index: START ===========================================================")
-    f = open("temp.txt",'w')
-    for i in range(len(edge_lengths)):
-        f.write(str("{:.7f}".format(mesh.vs[edge_points[i, 0]][0]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 0]][1]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 0]][2]))
-         + ' ; ' + str("{:.7f}".format(mesh.vs[edge_points[i, 1]][0]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 1]][1]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 1]][2])) + '\n')
-    f.close()
+    # f = open("temp.txt",'w')
+    # for i in range(len(edge_lengths)):
+    #     f.write(str("{:.7f}".format(mesh.vs[edge_points[i, 0]][0]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 0]][1]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 0]][2]))
+    #      + ' ; ' + str("{:.7f}".format(mesh.vs[edge_points[i, 1]][0]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 1]][1]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 1]][2])) + '\n')
+    # f.close()
     # print("===================== Mesh edge vertex index: END ===========================================================")
+
+def get_edge_colors(mesh):
+    edge_colors = []
+    edge_points = get_edge_points(mesh)
+    edge_lengths = np.linalg.norm(mesh.vs[edge_points[:, 0]] - mesh.vs[edge_points[:, 1]], ord=2, axis=1)
+    for i in range(len(edge_lengths)):
+        avg_color = (mesh.colors[edge_points[i, 0]] + mesh.colors[edge_points[i, 1]]) / 2
+        edge_colors.append(avg_color)
+    return np.asarray(edge_colors)
 
 def extract_features(mesh):
     features = []
