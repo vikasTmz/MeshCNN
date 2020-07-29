@@ -10,7 +10,7 @@ from models.layers.mesh_prepare import fill_mesh
 class Mesh:
 
     def __init__(self, file=None, opt=None, hold_history=False, export_folder=''):
-        self.vs = self.v_mask = self.filename = self.features = self.edge_areas = self.colors = None
+        self.vs = self.v_mask = self.filename = self.features = self.edge_areas = self.colors  = self.edge_colors = None
         self.edges = self.gemm_edges = self.sides = None
         self.pool_count = 0
         fill_mesh(self, file, opt)
