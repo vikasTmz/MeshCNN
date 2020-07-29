@@ -54,7 +54,7 @@ def from_scratch(file, opt):
     mesh_data.edge_lengths = None
     mesh_data.edge_areas = []
     mesh_data.vs, faces, mesh_data.colors = fill_from_file(mesh_data, file)
-    print("mesh_data.colors: ",mesh_data.colors)
+
     mesh_data.v_mask = np.ones(len(mesh_data.vs), dtype=bool)
     faces, face_areas = remove_non_manifolds(mesh_data, faces)
     if opt.num_aug > 1:
@@ -78,7 +78,7 @@ def fill_from_file(mesh, file):
             continue
         elif splitted_line[0] == 'v':
             vs.append([float(v) for v in splitted_line[1:4]])
-            colors.append(float(c) for c in splitted_line[4:7])
+            colors.append([float(c) for c in splitted_line[4:7]])
         elif splitted_line[0] == 'f':
             face_vertex_ids = [int(c.split('/')[0]) for c in splitted_line[1:]]
             assert len(face_vertex_ids) == 3
