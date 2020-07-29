@@ -54,6 +54,7 @@ def from_scratch(file, opt):
     mesh_data.edge_lengths = None
     mesh_data.edge_areas = []
     mesh_data.vs, faces, mesh_data.colors = fill_from_file(mesh_data, file)
+    print("mesh_data.colors: ",mesh_data.colors)
     mesh_data.v_mask = np.ones(len(mesh_data.vs), dtype=bool)
     faces, face_areas = remove_non_manifolds(mesh_data, faces)
     if opt.num_aug > 1:
@@ -321,7 +322,7 @@ def get_edge_colors(mesh):
     edge_colors = []
     edge_points = get_edge_points(mesh)
     edge_lengths = np.linalg.norm(mesh.vs[edge_points[:, 0]] - mesh.vs[edge_points[:, 1]], ord=2, axis=1)
-    print(mesh.colors)
+    # print(mesh.colors)
     for i in range(len(edge_lengths)):
         avg_color = [(mesh.colors[edge_points[i, 0]][0] + mesh.colors[edge_points[i, 1]][0]) / 2, 
                      (mesh.colors[edge_points[i, 0]][1] + mesh.colors[edge_points[i, 1]][1]) / 2,
