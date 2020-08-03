@@ -88,6 +88,7 @@ def fill_from_file(mesh, file):
             faces.append(face_vertex_ids)
     f.close()
     vs = np.asarray(vs)
+    print("colors: ", colors)
     colors = np.asarray(colors)
     faces = np.asarray(faces, dtype=int)
     assert np.logical_and(faces >= 0, faces < len(vs)).all()
