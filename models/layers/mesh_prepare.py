@@ -16,7 +16,7 @@ def fill_mesh(mesh2fill, file: str, opt):
                             edge_lengths=mesh_data.edge_lengths, edge_areas=mesh_data.edge_areas,
                             features=mesh_data.features)
     mesh2fill.vs = mesh_data['vs']
-    mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
+    #mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
     mesh2fill.edges = mesh_data['edges']
     mesh2fill.gemm_edges = mesh_data['gemm_edges']
     mesh2fill.edges_count = int(mesh_data['edges_count'])
@@ -55,7 +55,6 @@ def from_scratch(file, opt):
     mesh_data.edge_lengths = None
     mesh_data.edge_areas = []
     mesh_data.vs, faces, mesh_data.colors = fill_from_file(mesh_data, file)
-    print("mesh_data.colors.shape:   ",mesh_data.colors.shape)
     mesh_data.v_mask = np.ones(len(mesh_data.vs), dtype=bool)
     faces, face_areas = remove_non_manifolds(mesh_data, faces)
     if opt.num_aug > 1:
@@ -88,7 +87,6 @@ def fill_from_file(mesh, file):
             faces.append(face_vertex_ids)
     f.close()
     vs = np.asarray(vs)
-    print("colors: ", colors)
     colors = np.asarray(colors)
     faces = np.asarray(faces, dtype=int)
     assert np.logical_and(faces >= 0, faces < len(vs)).all()
