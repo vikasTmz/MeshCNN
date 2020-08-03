@@ -49,7 +49,6 @@ class TexturizeModel:
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)
         self.mesh = data['mesh']
-        print(self.mesh[0].vs)
 
 
     def forward(self):
@@ -118,8 +117,7 @@ class TexturizeModel:
             gt = self.labels.cpu().detach().numpy()
             gt = gt[0]
 
-
-        return correct, 1, out
+        return correct, 1, out, gt
 
     # def get_accuracy(self, pred, labels):
     #     correct = seg_accuracy(pred, labels, self.mesh)
