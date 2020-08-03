@@ -385,6 +385,9 @@ def get_edge_points(mesh):
         each adjacent face to edge_id has another vertex, which is edge_points[edge_id, 2] or edge_points[edge_id, 3]
     """
     edge_points = np.zeros([mesh.edges_count, 4], dtype=np.int32)
+    print(len(mesh.gemm_edges))
+    print(len(mesh.edges))
+
     for edge_id, edge in enumerate(mesh.edges):
         edge_points[edge_id] = get_side_points(mesh, edge_id)
         # edge_points[edge_id, 3:] = mesh.get_side_points(edge_id, 2)
