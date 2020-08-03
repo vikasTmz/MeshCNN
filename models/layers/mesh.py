@@ -10,7 +10,7 @@ from models.layers.mesh_prepare import fill_mesh
 class Mesh:
 
     def __init__(self, file=None, opt=None, hold_history=False, export_folder=''):
-        self.vs = self.v_mask = self.filename = self.features = None
+        self.vs = self.v_mask = self.filename = self.features = self.vertices = None
         self.edge_areas = self.colors  = self.edge_colors = None
         self.faces = self.edges = self.gemm_edges = self.sides = None
         self.pool_count = 0
@@ -80,7 +80,7 @@ class Mesh:
             else:
                 return
         faces = self.faces
-        vs = self.vs
+        vs = self.vertices
         # gemm = np.array(self.gemm_edges)
         # new_indices = np.zeros(self.v_mask.shape[0], dtype=np.int32)
         # new_indices[self.v_mask] = np.arange(0, np.ma.where(self.v_mask)[0].shape[0])
