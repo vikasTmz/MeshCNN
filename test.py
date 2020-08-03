@@ -15,14 +15,8 @@ def run_test(epoch=-1):
     writer.reset_counter()
     for i, data in enumerate(dataset):
         model.set_input(data)
-        ncorrect, nexamples, out, gt = model.test()
-        # Save results to obj file with color
-        f_gt = open("results/" + str(i) + "_gt.obj", "w")
-        f_out = open("results/" + str(i) + "_out.obj", "w")
-        # f.write("Woops! I have deleted the content!")
-        f_gt.close()
-        f_out.close()
-        # np.savetxt('results/'+str(i)+'.txt', out, delimiter=' ')
+        ncorrect, nexamples, out = model.test()
+        np.savetxt('results/'+str(i)+'.txt', out[0], delimiter=' ')
         writer.update_counter(ncorrect, nexamples)
     writer.print_acc(epoch, writer.acc)
     return writer.acc
