@@ -27,6 +27,7 @@ def run_test(epoch=-1):
         # Save results to obj file with color
         gt_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
         out_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
+        print("gt_vcolor.shape: ",gt_vcolor.shape)
         for i, edges in mesh[0].edges:
             print(edges, i)
             gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], gt[i])
