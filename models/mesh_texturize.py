@@ -112,8 +112,6 @@ class TexturizeModel:
             out = self.forward()
             out = torch.reshape(out,self.labels.shape)
             correct = 1 - torch.nn.L1Loss()(out, self.labels)
-            print("self.mesh.edges_count: ",self.mesh[0].edges_count)
-            print("self.mesh.edges: ",self.mesh[0].edges.shape)
             # print(self.mesh[0].export('results/temp.txt'))
         return correct, 1, out.cpu().detach().numpy()
 
