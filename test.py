@@ -15,11 +15,9 @@ def run_test(epoch=-1):
     writer.reset_counter()
     for i, data in enumerate(dataset):
         model.set_input(data)
-        ncorrect, nexamples, out, gt = model.test()
+        ncorrect, nexamples, out, gt, edge_points, edge_lengths = model.test()
         # Save results to obj file with color
-        mesh = data['mesh']
-        print(mesh[0].vs)
-        print(mesh[0].edges)
+        print(edge_lengths)
 
         f_gt = open("results/" + str(i) + "_gt.obj", "w")
         f_out = open("results/" + str(i) + "_out.obj", "w")

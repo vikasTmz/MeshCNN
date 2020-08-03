@@ -4,7 +4,7 @@ import torch
 import numpy as np
 import os
 from models.layers.mesh_union import MeshUnion
-from models.layers.mesh_prepare import fill_mesh
+from models.layers.mesh_prepare import fill_mesh, get_edge_points
 
 
 class Mesh:
@@ -199,3 +199,8 @@ class Mesh:
 
     def get_edge_areas(self):
         return self.edge_areas
+
+    def _get_edge_points(self):
+        edge_points = get_edge_points(self)
+        edge_lengths = np.linalg.norm(self.vs[edge_points[:, 0]] - self.vs[edge_points[:, 1]], ord=2, axis=1)
+        return edge_points, edge_lengths
