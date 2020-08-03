@@ -19,7 +19,7 @@ def run_test(epoch=-1):
     writer = Writer(opt)
     # test
     writer.reset_counter()
-    for i, data in enumerate(dataset):
+    for j, data in enumerate(dataset):
         mesh = data['mesh']
         model.set_input(data)
         ncorrect, nexamples, out, gt = model.test()
@@ -36,13 +36,10 @@ def run_test(epoch=-1):
 
         gt_vcolor = np.clip(gt_vcolor, 0, 1)
         out_vcolor = np.clip(out_vcolor, 0, 1)
-        # f_gt = open("results/" + str(i) + "_gt.obj", "w")
-        # f_out = open("results/" + str(i) + "_out.obj", "w")
 
-        mesh[0].export("results/" + str(i) + "_gt.obj", gt_vcolor)
-        mesh[0].export("results/" + str(i) + "_out.obj", out_vcolor)
-        # f_gt.close()
-        # f_out.close()
+        mesh[0].export("results/" + str(j) + "_gt.obj", gt_vcolor)
+        mesh[0].export("results/" + str(j) + "_out.obj", out_vcolor)
+
         # np.savetxt('results/'+str(i)+'.txt', out, delimiter=' ')
         writer.update_counter(ncorrect, nexamples)
     writer.print_acc(epoch, writer.acc)
