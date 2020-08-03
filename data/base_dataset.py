@@ -29,7 +29,7 @@ class BaseDataset(data.Dataset):
             num_aug = self.opt.num_aug
             self.opt.num_aug = 1
             mean, std = np.array(0), np.array(0)
-            print(self)
+            print(len(self))
             for i, data in enumerate(self):
                 if i % 500 == 0:
                     print('{} of {}'.format(i, self.size))
