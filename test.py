@@ -16,7 +16,7 @@ def run_test(epoch=-1):
     for i, data in enumerate(dataset):
         model.set_input(data)
         ncorrect, nexamples, out = model.test()
-        np.savetxt('results/'+str(i)+'.txt', out[0], delimiter=' ')
+        np.savetxt('results/'+str(i)+'.txt', out, delimiter=' ')
         writer.update_counter(ncorrect, nexamples)
     writer.print_acc(epoch, writer.acc)
     return writer.acc

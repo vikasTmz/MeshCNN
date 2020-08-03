@@ -49,6 +49,8 @@ class TexturizeModel:
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)
         self.mesh = data['mesh']
+        print(dir(data))
+        print(dir(self.mesh))
 
 
     def forward(self):
@@ -112,7 +114,13 @@ class TexturizeModel:
             out = self.forward()
             out = torch.reshape(out,self.labels.shape)
             correct = 1 - torch.nn.L1Loss()(out, self.labels)
-        return correct, 1, out.cpu().detach().numpy()
+            out = out.cpu().detach().numpy()
+            out = np.clip(out[0], 0, 1)
+            gt = self.labels.cpu().detach().numpy()
+            gt = gt[0]
+
+
+        return correct, 1, out
 
     # def get_accuracy(self, pred, labels):
     #     correct = seg_accuracy(pred, labels, self.mesh)
