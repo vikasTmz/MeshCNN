@@ -83,20 +83,17 @@ class Mesh:
         gemm = np.array(self.gemm_edges)
         new_indices = np.zeros(self.v_mask.shape[0], dtype=np.int32)
         new_indices[self.v_mask] = np.arange(0, np.ma.where(self.v_mask)[0].shape[0])
-        # for edge_index in range(len(gemm)):
-        #     cycles = self.__get_cycle(gemm, edge_index)
-        #     for cycle in cycles:
-        #         faces.append(self.__cycle_to_face(cycle, new_indices))
+        for edge_index in range(len(gemm)):
+            cycles = self.__get_cycle(gemm, edge_index)
+            for cycle in cycles:
+                faces.append(self.__cycle_to_face(cycle, new_indices))
         with open(file, 'w+') as f:
             for vi, v in enumerate(vs):
                 vcol = ' %f %f %f' % (vcolor[vi, 0], vcolor[vi, 1], vcolor[vi, 2]) if vcolor is not None else ''
                 f.write("v %f %f %f%s\n" % (v[0], v[1], v[2], vcol))
-            # for face_id in range(len(faces) - 1):
-                # f.write("f %d %d %d\n" % (faces[face_id][0] + 1, faces[face_id][1] + 1, faces[face_id][2] + 1))
-            # f.write("f %d %d %d" % (faces[-1][0] + 1, faces[-1][1] + 1, faces[-1][2] + 1))
-            # for edge in self.edges:
-                # print("new_indices: ",new_indices[edge[0]], new_indices[edge[1]])
-                # f.write("\ne %d %d" % (new_indices[edge[0]] + 1, new_indices[edge[1]] + 1))
+            for face_id in range(len(faces) - 1):
+                f.write("f %d %d %d\n" % (faces[face_id][0] + 1, faces[face_id][1] + 1, faces[face_id][2] + 1))
+            f.write("f %d %d %d" % (faces[-1][0] + 1, faces[-1][1] + 1, faces[-1][2] + 1))
 
     def export_segments(self, segments):
         if not self.export_folder:
