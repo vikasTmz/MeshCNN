@@ -325,7 +325,8 @@ def get_edge_colors(mesh):
     edge_points = get_edge_points(mesh)
     edge_lengths = np.linalg.norm(mesh.vs[edge_points[:, 0]] - mesh.vs[edge_points[:, 1]], ord=2, axis=1)
     print("edge_points: ",edge_points)
-    print("edge_lengths: ", len(edge_lengths))
+    print("mesh.edges :  ", mesh.edges_count)
+    print("mesh.edges :  ", mesh.edges)
     for i in range(len(edge_lengths)):
         avg_color = [(mesh.colors[edge_points[i, 0]][0] + mesh.colors[edge_points[i, 1]][0]) / 2, 
                      (mesh.colors[edge_points[i, 0]][1] + mesh.colors[edge_points[i, 1]][1]) / 2,
