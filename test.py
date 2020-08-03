@@ -20,8 +20,8 @@ def run_test(epoch=-1):
         mesh = data['mesh']
         print(mesh[0].edges)
 
-        f_gt = open("results/" + str(i) "_gt.obj", "w")
-        f_out = open("results/" + str(i) "_out.obj", "w")
+        f_gt = open("results/" + str(i) + "_gt.obj", "w")
+        f_out = open("results/" + str(i) + "_out.obj", "w")
         # f.write("Woops! I have deleted the content!")
         f_gt.close()
         f_out.close()
