@@ -16,7 +16,7 @@ def fill_mesh(mesh2fill, file: str, opt):
                             edge_lengths=mesh_data.edge_lengths, edge_areas=mesh_data.edge_areas,
                             features=mesh_data.features)
     mesh2fill.vs = mesh_data['vs']
-    # mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
+    mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
     mesh2fill.edges = mesh_data['edges']
     mesh2fill.gemm_edges = mesh_data['gemm_edges']
     mesh2fill.edges_count = int(mesh_data['edges_count'])
@@ -27,7 +27,9 @@ def fill_mesh(mesh2fill, file: str, opt):
     mesh2fill.edge_areas = mesh_data['edge_areas']
     mesh2fill.features = mesh_data['features']
     mesh2fill.sides = mesh_data['sides']
-    # mesh2fill.edge_colors = mesh_data['edge_colors']
+    mesh2fill.edge_points = mesh_data['edge_points']
+
+    mesh2fill.edge_colors = mesh_data['edge_colors']
 
 def get_mesh_path(file: str, num_aug: int):
     filename, _ = os.path.splitext(file)
@@ -53,6 +55,7 @@ def from_scratch(file, opt):
     mesh_data.v_mask = None
     mesh_data.filename = 'unknown'
     mesh_data.edge_lengths = None
+    mesh_data.edge_points = None
     mesh_data.edge_areas = []
     mesh_data.vs, faces, mesh_data.colors = fill_from_file(mesh_data, file)
 
@@ -64,7 +67,7 @@ def from_scratch(file, opt):
     if opt.num_aug > 1:
         post_augmentation(mesh_data, opt)
     mesh_data.features = extract_features(mesh_data)
-    # mesh_data.edge_colors = get_edge_colors(mesh_data)
+    mesh_data.edge_colors, mesh_data.edge_points = get_edge_colors(mesh_data)
     return mesh_data
 
 def fill_from_file(mesh, file):
@@ -331,7 +334,7 @@ def get_edge_colors(mesh):
                      (mesh.colors[edge_points[i, 0]][1] + mesh.colors[edge_points[i, 1]][1]) / 2,
                      (mesh.colors[edge_points[i, 0]][2] + mesh.colors[edge_points[i, 1]][2]) / 2]
         edge_colors.append(avg_color)
-    return np.asarray(edge_colors)
+    return np.asarray(edge_colors), np.asarray(edge_points)
 
 def extract_features(mesh):
     features = []
@@ -385,8 +388,6 @@ def get_edge_points(mesh):
         each adjacent face to edge_id has another vertex, which is edge_points[edge_id, 2] or edge_points[edge_id, 3]
     """
     edge_points = np.zeros([mesh.edges_count, 4], dtype=np.int32)
-    print(len(mesh.gemm_edges))
-    print(len(mesh.edges))
 
     for edge_id, edge in enumerate(mesh.edges):
         edge_points[edge_id] = get_side_points(mesh, edge_id)
