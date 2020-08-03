@@ -8,7 +8,7 @@ python train.py \
 --dataset_mode texturize \
 --ncf 32 64 128 256 \
 --ninput_edges 5331 \
---pool_res 4600 3800 3000 \
+--pool_res 5331 5331 5331 \
 --resblocks 3 \
 --lr 0.001 \
 --batch_size 12 \
