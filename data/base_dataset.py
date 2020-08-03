@@ -29,6 +29,7 @@ class BaseDataset(data.Dataset):
             num_aug = self.opt.num_aug
             self.opt.num_aug = 1
             mean, std = np.array(0), np.array(0)
+            i=0
             for i, data in enumerate(self):
                 if i % 500 == 0:
                     print('{} of {}'.format(i, self.size))
@@ -37,6 +38,7 @@ class BaseDataset(data.Dataset):
                 std = std + features.std(axis=1)
             mean = mean / (i + 1)
             std = std / (i + 1)
+            print("[Base_Dataset] i: ", i)
             transform_dict = {'mean': mean[:, np.newaxis], 'std': std[:, np.newaxis],
                               'ninput_channels': len(mean)}
             with open(mean_std_cache, 'wb') as f:
