@@ -95,7 +95,8 @@ class Mesh:
                 f.write("f %d %d %d\n" % (faces[face_id][0] + 1, faces[face_id][1] + 1, faces[face_id][2] + 1))
             f.write("f %d %d %d" % (faces[-1][0] + 1, faces[-1][1] + 1, faces[-1][2] + 1))
             for edge in self.edges:
-                f.write("\ne %d %d" % (new_indices[edge[0]] + 1, new_indices[edge[1]] + 1))
+                print("new_indices: ",new_indices[edge[0]], new_indices[edge[1]])
+                # f.write("\ne %d %d" % (new_indices[edge[0]] + 1, new_indices[edge[1]] + 1))
 
     def export_segments(self, segments):
         if not self.export_folder:
