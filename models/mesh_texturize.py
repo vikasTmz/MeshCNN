@@ -2,7 +2,7 @@ import torch
 from . import networks
 from os.path import join
 from util.util import seg_accuracy, print_network
-
+import numpy as np
 
 class TexturizeModel:
     """ Class for training Model weights
@@ -49,8 +49,7 @@ class TexturizeModel:
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)
         self.mesh = data['mesh']
-        print(dir(data))
-        print(dir(self.mesh))
+        print(self.mesh.shape)
 
 
     def forward(self):
