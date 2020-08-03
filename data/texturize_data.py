@@ -29,9 +29,8 @@ class TexturizeData(BaseDataset):
         mesh = Mesh(file=path, opt=self.opt, hold_history=True, export_folder=self.opt.export_folder)
         meta = {}
         meta['mesh'] = mesh
-        label = read_edgecolor(self.seg_paths[index])# - self.offset
-        # print("mesh.edge_colors: ",mesh.edge_colors)
-        print(label.shape)
+        # label = read_edgecolor(self.seg_paths[index])# - self.offset
+        label = mesh.edge_colors
         label = pad(label, self.opt.ninput_edges, val=-1, dim=0)
         meta['label'] = label
         # soft_label = read_sseg(self.sseg_paths[index])
