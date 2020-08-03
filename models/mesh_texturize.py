@@ -112,15 +112,17 @@ class TexturizeModel:
             out = self.forward()
             out = torch.reshape(out,self.labels.shape)
             correct = 1 - torch.nn.L1Loss()(out, self.labels)
+
             out = out.cpu().detach().numpy()
             out = np.clip(out[0], 0, 1)
             gt = self.labels.cpu().detach().numpy()
             gt = gt[0]
+            
             print(self.mesh[0].edge_points)
             print(self.mesh[0].edge_lengths)
             # edge_points, edge_lengths = self.mesh[0]._get_edge_points()
 
-        return correct, 1, out, gt, edge_points, edge_lengths
+        return correct, 1, out, gt #, edge_points, edge_lengths
 
     # def get_accuracy(self, pred, labels):
     #     correct = seg_accuracy(pred, labels, self.mesh)

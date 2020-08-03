@@ -15,10 +15,8 @@ def run_test(epoch=-1):
     writer.reset_counter()
     for i, data in enumerate(dataset):
         model.set_input(data)
-        ncorrect, nexamples, out, gt, edge_points, edge_lengths = model.test()
+        ncorrect, nexamples, out, gt = model.test()
         # Save results to obj file with color
-        print(edge_lengths)
-
         f_gt = open("results/" + str(i) + "_gt.obj", "w")
         f_out = open("results/" + str(i) + "_out.obj", "w")
         # f.write("Woops! I have deleted the content!")
