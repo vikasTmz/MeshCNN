@@ -49,7 +49,7 @@ class TexturizeModel:
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)
         self.mesh = data['mesh']
-        print(self.mesh.shape)
+        print(self.mesh)
 
 
     def forward(self):
