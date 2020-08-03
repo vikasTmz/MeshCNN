@@ -16,7 +16,7 @@ def fill_mesh(mesh2fill, file: str, opt):
                             edge_lengths=mesh_data.edge_lengths, edge_areas=mesh_data.edge_areas,
                             features=mesh_data.features)
     mesh2fill.vs = mesh_data['vs']
-    # mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
+    mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
     mesh2fill.edges = mesh_data['edges']
     mesh2fill.gemm_edges = mesh_data['gemm_edges']
     mesh2fill.edges_count = int(mesh_data['edges_count'])
@@ -27,7 +27,7 @@ def fill_mesh(mesh2fill, file: str, opt):
     mesh2fill.edge_areas = mesh_data['edge_areas']
     mesh2fill.features = mesh_data['features']
     mesh2fill.sides = mesh_data['sides']
-    # mesh2fill.edge_colors = mesh_data['edge_colors']
+    mesh2fill.edge_colors = mesh_data['edge_colors']
 
 def get_mesh_path(file: str, num_aug: int):
     filename, _ = os.path.splitext(file)
@@ -64,7 +64,7 @@ def from_scratch(file, opt):
     if opt.num_aug > 1:
         post_augmentation(mesh_data, opt)
     mesh_data.features = extract_features(mesh_data)
-    # mesh_data.edge_colors = get_edge_colors(mesh_data)
+    mesh_data.edge_colors = get_edge_colors(mesh_data)
     return mesh_data
 
 def fill_from_file(mesh, file):
@@ -314,8 +314,8 @@ def set_edge_lengths(mesh, edge_points=None):
     print("edge_lengths: ",len(edge_lengths))
     # print("===================== Mesh edge vertex index: START ===========================================================")
     # f = open("temp.txt",'w')
-    for i in range(len(edge_lengths)):
-        print(mesh.vs[edge_points[i, 0]], mesh.vs[edge_points[i, 1]])
+    # for i in range(len(edge_lengths)):
+        # print(mesh.vs[edge_points[i, 0]], mesh.vs[edge_points[i, 1]])
     #     f.write(str("{:.7f}".format(mesh.vs[edge_points[i, 0]][0]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 0]][1]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 0]][2]))
     #      + ' ; ' + str("{:.7f}".format(mesh.vs[edge_points[i, 1]][0]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 1]][1]) + ' ' + "{:.7f}".format(mesh.vs[edge_points[i, 1]][2])) + '\n')
     # f.close()
