@@ -4,14 +4,14 @@ import torch
 import numpy as np
 import os
 from models.layers.mesh_union import MeshUnion
-from models.layers.mesh_prepare import fill_mesh
+from models.layers.mesh_prepare import fill_mesh, get_edge_points
 
 
 class Mesh:
 
     def __init__(self, file=None, opt=None, hold_history=False, export_folder=''):
-        self.vs = self.v_mask = self.filename = self.features = self.edge_areas = self.colors  = self.edge_colors = None
-        self.edges = self.gemm_edges = self.sides = None
+        self.vs = self.v_mask = self.filename = self.features = self.edge_areas = self.colors = self.edge_colors = None
+        self.edges = self.gemm_edges = self.sides = self.edge_points = None 
         self.pool_count = 0
         fill_mesh(self, file, opt)
         self.export_folder = export_folder
@@ -71,7 +71,7 @@ class Mesh:
         self.export()
 
 
-    def export(self, file=None, vcolor=None):
+    def export(self, file=None, ecolor=None):
         if file is None:
             if self.export_folder:
                 filename, file_extension = os.path.splitext(self.filename)
@@ -80,9 +80,13 @@ class Mesh:
                 return
         faces = []
         vs = self.vs[self.v_mask]
+        vcolor = np.zeros(self.vs.shape, dtype=np.float32)
         gemm = np.array(self.gemm_edges)
         new_indices = np.zeros(self.v_mask.shape[0], dtype=np.int32)
         new_indices[self.v_mask] = np.arange(0, np.ma.where(self.v_mask)[0].shape[0])
+        # for ei, edge in enumerate(self.edges):
+        #     vcolor[new_indices[edge[0]]] = 
+
         for edge_index in range(len(gemm)):
             cycles = self.__get_cycle(gemm, edge_index)
             for cycle in cycles:
@@ -94,8 +98,8 @@ class Mesh:
             for face_id in range(len(faces) - 1):
                 f.write("f %d %d %d\n" % (faces[face_id][0] + 1, faces[face_id][1] + 1, faces[face_id][2] + 1))
             f.write("f %d %d %d" % (faces[-1][0] + 1, faces[-1][1] + 1, faces[-1][2] + 1))
-            for edge in self.edges:
-                f.write("\ne %d %d" % (new_indices[edge[0]] + 1, new_indices[edge[1]] + 1))
+            # for edge in self.edges:
+                # f.write("\ne %d %d" % (new_indices[edge[0]] + 1, new_indices[edge[1]] + 1))
 
     def export_segments(self, segments):
         if not self.export_folder:
@@ -199,3 +203,8 @@ class Mesh:
 
     def get_edge_areas(self):
         return self.edge_areas
+
+    # def _get_edge_points(self):
+    #     edge_points = get_edge_points(self)
+    #     edge_lengths = np.linalg.norm(self.vs[edge_points[:, 0]] - self.vs[edge_points[:, 1]], ord=2, axis=1)
+    #     return edge_points, edge_lengths
