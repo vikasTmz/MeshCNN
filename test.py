@@ -14,6 +14,8 @@ def run_test(epoch=-1):
     # test
     writer.reset_counter()
     for i, data in enumerate(dataset):
+        mesh = data['mesh']
+        print("test: mesh.edges.shape : ",mesh.edges.shape)
         model.set_input(data)
         ncorrect, nexamples, out = model.test()
         np.savetxt('results/'+str(i)+'.txt', out[0], delimiter=' ')
