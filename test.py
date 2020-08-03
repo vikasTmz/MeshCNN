@@ -39,8 +39,8 @@ def run_test(epoch=-1):
         # f_gt = open("results/" + str(i) + "_gt.obj", "w")
         # f_out = open("results/" + str(i) + "_out.obj", "w")
 
-        mesh.export("results/" + str(i) + "_gt.obj", gt_vcolor)
-        mesh.export("results/" + str(i) + "_out.obj", out_vcolor)
+        mesh[0].export("results/" + str(i) + "_gt.obj", gt_vcolor)
+        mesh[0].export("results/" + str(i) + "_out.obj", out_vcolor)
         # f_gt.close()
         # f_out.close()
         # np.savetxt('results/'+str(i)+'.txt', out, delimiter=' ')
