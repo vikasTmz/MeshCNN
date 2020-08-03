@@ -55,7 +55,7 @@ def from_scratch(file, opt):
     mesh_data.edge_lengths = None
     mesh_data.edge_areas = []
     mesh_data.vs, faces, mesh_data.colors = fill_from_file(mesh_data, file)
-
+    print(mesh_data.colors.shape)
     mesh_data.v_mask = np.ones(len(mesh_data.vs), dtype=bool)
     faces, face_areas = remove_non_manifolds(mesh_data, faces)
     if opt.num_aug > 1:
