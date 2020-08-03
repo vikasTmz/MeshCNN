@@ -29,16 +29,16 @@ class BaseDataset(data.Dataset):
             num_aug = self.opt.num_aug
             self.opt.num_aug = 1
             mean, std = np.array(0), np.array(0)
-            i=0
+            count = 0 
             for i, data in enumerate(self):
                 if i % 500 == 0:
                     print('{} of {}'.format(i, self.size))
                 features = data['edge_features']
                 mean = mean + features.mean(axis=1)
                 std = std + features.std(axis=1)
-            mean = mean / (i + 1)
-            std = std / (i + 1)
-            print("[Base_Dataset] i: ", i)
+                count = i
+            mean = mean / (count + 1)
+            std = std / (count + 1)
             transform_dict = {'mean': mean[:, np.newaxis], 'std': std[:, np.newaxis],
                               'ninput_channels': len(mean)}
             with open(mean_std_cache, 'wb') as f:
