@@ -10,8 +10,9 @@ from models.layers.mesh_prepare import fill_mesh
 class Mesh:
 
     def __init__(self, file=None, opt=None, hold_history=False, export_folder=''):
-        self.vs = self.v_mask = self.filename = self.features = self.edge_areas = self.colors  = self.edge_colors = None
-        self.edges = self.gemm_edges = self.sides = None
+        self.vs = self.v_mask = self.filename = self.features = None
+        self.edge_areas = self.colors  = self.edge_colors = None
+        self.faces = self.edges = self.gemm_edges = self.sides = None
         self.pool_count = 0
         fill_mesh(self, file, opt)
         self.export_folder = export_folder
@@ -78,15 +79,15 @@ class Mesh:
                 file = '%s/%s_%d%s' % (self.export_folder, filename, self.pool_count, file_extension)
             else:
                 return
-        faces = []
+        faces = self.faces
         vs = self.vs[self.v_mask]
         gemm = np.array(self.gemm_edges)
         new_indices = np.zeros(self.v_mask.shape[0], dtype=np.int32)
         new_indices[self.v_mask] = np.arange(0, np.ma.where(self.v_mask)[0].shape[0])
-        for edge_index in range(len(gemm)):
-            cycles = self.__get_cycle(gemm, edge_index)
-            for cycle in cycles:
-                faces.append(self.__cycle_to_face(cycle, new_indices))
+        # for edge_index in range(len(gemm)):
+        #     cycles = self.__get_cycle(gemm, edge_index)
+        #     for cycle in cycles:
+        #         faces.append(self.__cycle_to_face(cycle, new_indices))
         with open(file, 'w+') as f:
             for vi, v in enumerate(vs):
                 vcol = ' %f %f %f' % (vcolor[vi, 0], vcolor[vi, 1], vcolor[vi, 2]) if vcolor is not None else ''

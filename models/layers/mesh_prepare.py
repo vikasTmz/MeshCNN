@@ -47,15 +47,16 @@ def from_scratch(file, opt):
 
     mesh_data = MeshPrep()
     mesh_data.vs = mesh_data.edges = mesh_data.colors = mesh_data.edge_colors = None
-    mesh_data.gemm_edges = mesh_data.sides = None
+    mesh_data.gemm_edges = mesh_data.sides = mesh_data.faces = None
     mesh_data.edges_count = None
     mesh_data.ve = None
     mesh_data.v_mask = None
     mesh_data.filename = 'unknown'
     mesh_data.edge_lengths = None
     mesh_data.edge_areas = []
-    mesh_data.vs, faces, mesh_data.colors = fill_from_file(mesh_data, file)
+    mesh_data.vs, mesh_data.faces, mesh_data.colors = fill_from_file(mesh_data, file)
     mesh_data.v_mask = np.ones(len(mesh_data.vs), dtype=bool)
+    faces = mesh_data.faces
     faces, face_areas = remove_non_manifolds(mesh_data, faces)
     if opt.num_aug > 1:
         faces = augmentation(mesh_data, opt, faces)
