@@ -39,6 +39,7 @@ class BaseDataset(data.Dataset):
                 count = i
             mean = mean / (count + 1)
             std = std / (count + 1)
+            print("mean: ",mean)
             transform_dict = {'mean': mean[:, np.newaxis], 'std': std[:, np.newaxis],
                               'ninput_channels': len(mean)}
             with open(mean_std_cache, 'wb') as f:
