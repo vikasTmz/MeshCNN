@@ -6,10 +6,10 @@ import numpy as np
 
 def run_test(epoch=-1):
     def update_vertex_color(current_color, new_color):
-        # if current_color[0] < 0:
-        return new_color
-        # else:
-        #     return (current_color + new_color) / 2
+        if current_color[0] < 0:
+            return new_color
+        else:
+            return (current_color + new_color) / 2
 
     print('Running Test')
     opt = TestOptions().parse()
