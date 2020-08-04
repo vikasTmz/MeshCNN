@@ -11,7 +11,7 @@ python train.py \
 --pool_res 16416 16416 16416 \
 --resblocks 3 \
 --lr 0.001 \
---batch_size 1 \
+--batch_size 12 \
 --num_aug 20 \
 --slide_verts 0 \
 
