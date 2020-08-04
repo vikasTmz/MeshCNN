@@ -9,7 +9,7 @@ python train.py \
 --ncf 32 64 128 256 \
 --ninput_edges 1728 \
 --pool_res 1728 1728 \
---resblocks 3 \
+--resblocks 2 \
 --lr 0.001 \
 --batch_size 12 \
 --num_aug 10 \
