@@ -12,7 +12,7 @@ python train.py \
 --resblocks 3 \
 --lr 0.001 \
 --batch_size 12 \
---num_aug 5 \
+--num_aug 10 \
 --slide_verts 0 \
 
 
