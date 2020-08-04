@@ -7,8 +7,8 @@ python train.py \
 --arch meshunet \
 --dataset_mode texturize \
 --ncf 32 64 128 256 \
---ninput_edges 18862 \
---pool_res 18862 18862 18862 \
+--ninput_edges 15845 \
+--pool_res 15845 15845 15845 \
 --resblocks 3 \
 --lr 0.001 \
 --batch_size 1 \
