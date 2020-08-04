@@ -13,7 +13,7 @@ python train.py \
 --lr 0.001 \
 --batch_size 12 \
 --num_aug 10 \
---slide_verts 0.2 \
+--slide_verts 0 \
 
 
 #
