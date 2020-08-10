@@ -117,7 +117,7 @@ def define_loss(opt):
         loss = torch.nn.CrossEntropyLoss(ignore_index=-1)
     elif opt.dataset_mode == "texturize":
         print("Using L2 Loss")
-        loss = torch.nn.L2Loss()
+        loss = torch.nn.MSELoss()
     return loss
 
 ##############################################################################
