@@ -36,9 +36,9 @@ class TexturizeModel:
 
         if self.is_train:
             # SGD
-            # self.optimizer = torch.optim.SGD(self.net.parameters(), lr=0.1, momentum=0.7)
+            self.optimizer = torch.optim.SGD(self.net.parameters(), lr=0.0001, momentum=0.7)
             # Adam
-            self.optimizer = torch.optim.Adam(self.net.parameters(), lr=opt.lr, betas=(opt.beta1, 0.4))
+            # self.optimizer = torch.optim.Adam(self.net.parameters(), lr=opt.lr, betas=(opt.beta1, 0.4))
             self.scheduler = networks.get_scheduler(self.optimizer, opt)
             print_network(self.net)
 
@@ -47,7 +47,7 @@ class TexturizeModel:
 
     def set_input(self, data):
         input_edge_features = torch.from_numpy(data['edge_features']).float()
-        labels = torch.from_numpy(data['label']).float() * 255
+        labels = torch.from_numpy(data['label']).float()
         # set inputs
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)
