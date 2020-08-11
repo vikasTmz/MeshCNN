@@ -35,7 +35,7 @@ class TexturizeModel:
         self.criterion = networks.define_loss(opt).to(self.device)
 
         if self.is_train:
-            self.optimizer = torch.optim.Adam(self.net.parameters(), lr=opt.lr, betas=(opt.beta1, 0.9))
+            self.optimizer = torch.optim.Adam(self.net.parameters(), lr=opt.lr, betas=(opt.beta1, 0.3))
             self.scheduler = networks.get_scheduler(self.optimizer, opt)
             print_network(self.net)
 
