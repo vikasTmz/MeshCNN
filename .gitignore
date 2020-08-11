@@ -3,7 +3,7 @@
 *.m~
 
 # data files
-*.obj
+#*.obj
 checkpoints
 datasets
 runs
