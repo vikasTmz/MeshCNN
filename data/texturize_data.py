@@ -14,9 +14,7 @@ class TexturizeData(BaseDataset):
         self.root = opt.dataroot
         self.dir = os.path.join(opt.dataroot, opt.phase)
         self.paths = self.make_dataset(self.dir)
-        # self.seg_paths = self.get_seg_files(self.paths, os.path.join(self.root, 'colors'), seg_ext='.color')
-        # self.sseg_paths = self.get_seg_files(self.paths, os.path.join(self.root, 'sseg'), seg_ext='.seseg')
-        # self.classes, self.offset = self.get_n_segs(os.path.join(self.root, 'classes.txt'), self.seg_paths)
+
         self.nclasses = 3
         self.size = len(self.paths)
         self.get_mean_std()
@@ -29,12 +27,10 @@ class TexturizeData(BaseDataset):
         mesh = Mesh(file=path, opt=self.opt, hold_history=True, export_folder=self.opt.export_folder)
         meta = {}
         meta['mesh'] = mesh
-        # label = read_edgecolor(self.seg_paths[index])# - self.offset
         label = mesh.edge_colors
         label = pad(label, self.opt.ninput_edges, val=-1, dim=0)
         meta['label'] = label
-        # soft_label = read_sseg(self.sseg_paths[index])
-        # meta['soft_label'] = pad(soft_label, self.opt.ninput_edges, val=-1, dim=0)
+
         # get edge features
         edge_features = mesh.extract_features()
         edge_features = pad(edge_features, self.opt.ninput_edges)
@@ -79,17 +75,7 @@ class TexturizeData(BaseDataset):
 
         return meshes
 
-
-# def read_seg(seg):
-#     seg_labels = np.loadtxt(open(seg, 'r'), dtype='float64')
-#     return seg_labels
-
 def read_edgecolor(ecolor_file):
     edge_colors = np.loadtxt(open(ecolor_file, 'r'), dtype='float64')
     # edge_colors = np.array(edge_colors > 0, dtype=np.int32)
     return edge_colors
-
-# def read_sseg(sseg_file):
-#     sseg_labels = read_seg(sseg_file)
-#     sseg_labels = np.array(sseg_labels > 0, dtype=np.int32)
-#     return sseg_labels
