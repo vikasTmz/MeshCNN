@@ -7,8 +7,8 @@ python test.py \
 --arch meshunet \
 --dataset_mode texturize \
 --ncf 32 64 128 256 \
---ninput_edges 1500 \
---pool_res 1050 600 300 \
+--ninput_edges 1623 \
+--pool_res 1623 1623 1623 \
 --resblocks 3 \
 --batch_size 12 \
 --export_folder meshes \
