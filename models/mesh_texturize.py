@@ -36,7 +36,7 @@ class TexturizeModel:
 
         if self.is_train:
             # SGD
-            self.optimizer = torch.optim.SGD(self.net.parameters(), lr=0.0001, momentum=0.7)
+            self.optimizer = torch.optim.SGD(self.net.parameters(), lr=0.001, momentum=0.3)
             # Adam
             # self.optimizer = torch.optim.Adam(self.net.parameters(), lr=opt.lr, betas=(opt.beta1, 0.4))
             self.scheduler = networks.get_scheduler(self.optimizer, opt)
