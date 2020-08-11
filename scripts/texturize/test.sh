@@ -8,7 +8,7 @@ python test.py \
 --dataset_mode texturize \
 --ncf 32 64 128 256 \
 --ninput_edges 1623 \
---pool_res 1134 648 138 \
+--pool_res 1134 648 300 \
 --resblocks 3 \
 --batch_size 12 \
 --export_folder meshes \
