@@ -30,8 +30,7 @@ def run_test(epoch=-1):
         # # Save results to obj file with color
         gt_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
         out_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
-        print(mesh)
-        print(len(mesh[0].edges), mesh[0].vs.shape)
+        print(len(mesh[0].edges), mesh[0].faces.shape)
 
         for i, edges in enumerate(mesh[0].edges):
             gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], colormap[int(gt[i])])
