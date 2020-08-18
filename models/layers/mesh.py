@@ -12,7 +12,7 @@ class Mesh:
     def __init__(self, file=None, opt=None, hold_history=False, export_folder=''):
         self.vs = self.v_mask = self.filename = self.features = self.vertices = None
         self.edge_areas = self.colors  = self.edge_colors = None
-        self.faces = self.edges = self.gemm_edges = self.sides = None
+        self.faces = self.edges = self.org_edges = self.gemm_edges = self.sides = None
         self.pool_count = 0
         fill_mesh(self, file, opt)
         self.export_folder = export_folder
