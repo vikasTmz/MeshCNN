@@ -34,6 +34,7 @@ def run_test(epoch=-1):
             gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], colormap[int(gt[i])])
             gt_vcolor[edges[1]] = update_vertex_color(gt_vcolor[edges[1]], colormap[int(gt[i])])
 
+            print(out[i], gt[i])
             out_vcolor[edges[0]] = update_vertex_color(out_vcolor[edges[0]], colormap[int(out[i])])
             out_vcolor[edges[1]] = update_vertex_color(out_vcolor[edges[1]], colormap[int(out[i])])        
 
