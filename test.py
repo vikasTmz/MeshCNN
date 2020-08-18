@@ -19,7 +19,7 @@ def run_test(epoch=-1):
     writer = Writer(opt)
 
     # colormap
-    colormap = {1:[1,0,0],2:[0,1,0],3:[0,0,1]}
+    colormap = {1:[1,0,0],2:[0,1,0],3:[0,0,1], 0:[0,0,0],4:[0,0,0]}
     # test
     writer.reset_counter()
     for j, data in enumerate(dataset):
@@ -34,7 +34,6 @@ def run_test(epoch=-1):
             gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], colormap[int(gt[i])])
             gt_vcolor[edges[1]] = update_vertex_color(gt_vcolor[edges[1]], colormap[int(gt[i])])
 
-            print(out[i], gt[i])
             out_vcolor[edges[0]] = update_vertex_color(out_vcolor[edges[0]], colormap[int(out[i])])
             out_vcolor[edges[1]] = update_vertex_color(out_vcolor[edges[1]], colormap[int(out[i])])        
 
