@@ -124,6 +124,7 @@ class ClassifierModel:
             # print(np.where(self.labels.cpu().detach().numpy() == 0))
             gt = self.labels.cpu().detach().numpy()
 
+            print(pred_class[0].shape, gt[0].shape)
         return correct, len(label_class), pred_class[0], gt[0]
 
     def get_accuracy(self, pred, labels):
