@@ -82,7 +82,10 @@ def fill_from_file(mesh, file):
             continue
         elif splitted_line[0] == 'v':
             vs.append([float(v) for v in splitted_line[1:4]])
-            colors.append([float(c) for c in splitted_line[4:7]])
+            if len(splitted_line) > 4:
+                colors.append([float(c) for c in splitted_line[4:7]])
+            else:
+                colors.append([0.0, 0.0, 0.0])
         elif splitted_line[0] == 'f':
             face_vertex_ids = [int(c.split('/')[0]) for c in splitted_line[1:]]
             assert len(face_vertex_ids) == 3
