@@ -113,9 +113,10 @@ class ClassifierModel:
         with torch.no_grad():
             out = self.forward()
             print("OUT SIZE VS LABEL SIZE")
-            print(out.shape, self.labels.shape)
             # compute number of correct
             pred_class = out.data.max(1)[1]
+            print(pred_class.shape, self.labels.shape)
+
             label_class = self.labels
             self.export_segmentation(pred_class.cpu())
             correct = self.get_accuracy(pred_class, label_class)
