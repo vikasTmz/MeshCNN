@@ -118,7 +118,9 @@ class ClassifierModel:
             self.export_segmentation(pred_class.cpu())
             correct = self.get_accuracy(pred_class, label_class)
             out = out.cpu().detach().numpy()
-        return correct, len(label_class)
+            gt = self.labels.cpu().detach().numpy()
+            gt = gt[0]
+        return correct, len(label_class), out[0], gt
 
     def get_accuracy(self, pred, labels):
         """computes accuracy for classification / segmentation """
