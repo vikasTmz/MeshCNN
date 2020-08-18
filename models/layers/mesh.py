@@ -81,8 +81,6 @@ class Mesh:
                 return
         faces = self.faces
         vs = self.vertices
-        print("FROM EXPORT================")
-        print(vs.shape, faces.shape)
         # gemm = np.array(self.gemm_edges)
         # new_indices = np.zeros(self.v_mask.shape[0], dtype=np.int32)
         # new_indices[self.v_mask] = np.arange(0, np.ma.where(self.v_mask)[0].shape[0])
