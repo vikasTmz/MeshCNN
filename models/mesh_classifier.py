@@ -119,7 +119,8 @@ class ClassifierModel:
             correct = self.get_accuracy(pred_class, label_class)
             pred_class = pred_class.cpu().detach().numpy()
             print("SELF LABELS=========================")
-            print(self.labels)
+            print((self.labels == 0).nonzero())
+            print(numpy.where(self.labels.cpu().detach().numpy() == 0))
             gt = self.labels.cpu().detach().numpy()
             gt = gt[0]
         return correct, len(label_class), pred_class[0], gt
