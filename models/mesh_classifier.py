@@ -122,6 +122,7 @@ class ClassifierModel:
             print((self.labels == 0).nonzero())
             print(np.where(self.labels.cpu().detach().numpy() == 0))
             gt = self.labels.cpu().detach().numpy()
+            print(gt)
             gt = gt[0]
         return correct, len(label_class), pred_class[0], gt
 
