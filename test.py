@@ -27,22 +27,22 @@ def run_test(epoch=-1):
         model.set_input(data)
         ncorrect, nexamples, out, gt = model.test()
         
-        # # # Save results to obj file with color
-        # gt_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
-        # out_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
+        # # Save results to obj file with color
+        gt_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
+        out_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
 
-        # for i, edges in enumerate(mesh[0].org_edges):
-        #     gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], gt[i])
-        #     gt_vcolor[edges[1]] = update_vertex_color(gt_vcolor[edges[1]], gt[i])
+        for i, edges in enumerate(mesh[0].org_edges):
+            gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], [gt[i][0],0,0])
+            gt_vcolor[edges[1]] = update_vertex_color(gt_vcolor[edges[1]], [gt[i][0],0,0])
 
-        #     out_vcolor[edges[0]] = update_vertex_color(out_vcolor[edges[0]], out[i])
-        #     out_vcolor[edges[1]] = update_vertex_color(out_vcolor[edges[1]], out[i])        
+            out_vcolor[edges[0]] = update_vertex_color(out_vcolor[edges[0]], [out[i][0],0,0])
+            out_vcolor[edges[1]] = update_vertex_color(out_vcolor[edges[1]], [out[i][0],0,0])        
 
-        # # gt_vcolor = np.clip(gt_vcolor, 0, 1)
-        # # out_vcolor = np.clip(out_vcolor, 0, 1)
+        gt_vcolor = np.clip(gt_vcolor, 0, 1)
+        out_vcolor = np.clip(out_vcolor, 0, 1)
 
-        # mesh[0].export("results/" + str(j) + "_gt.obj", gt_vcolor)
-        # mesh[0].export("results/" + str(j) + "_out.obj", out_vcolor)
+        mesh[0].export("results/" + str(j) + "_gt.obj", gt_vcolor)
+        mesh[0].export("results/" + str(j) + "_out.obj", out_vcolor)
 
         writer.update_counter(ncorrect, nexamples)
     writer.print_acc(epoch, writer.acc)
