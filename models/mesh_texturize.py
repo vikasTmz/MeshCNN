@@ -62,10 +62,10 @@ class TexturizeModel:
         print("len out I: ",out.shape, self.labels.shape)
         out = torch.reshape(out,self.labels.shape)
         print("len out II: ",out.shape, self.labels.shape)
-        # print("------------OUT------------")
-        # print(out)
-        # print("------------self.labels------------")
-        # print(self.labels)
+        print("------------OUT------------")
+        print(out)
+        print("------------self.labels------------")
+        print(self.labels)
         self.loss = self.criterion(out, self.labels)
         if self.opt.dataset_mode == "texturize":
             self.loss *= self.opt.lambda_L1
