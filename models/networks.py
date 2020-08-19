@@ -101,7 +101,6 @@ def define_classifier(input_nc, ncf, ninput_edges, nclasses, opt, gpu_ids, arch,
         net = MeshConvNet(norm_layer, input_nc, ncf, nclasses, ninput_edges, opt.pool_res, opt.fc_n,
                           opt.resblocks)
     elif arch == 'meshunet':
-        print("INPUT_NC = ", input_nc, " nclasses = ", nclasses)
         down_convs = [input_nc] + ncf
         up_convs = ncf[::-1] + [nclasses]
         pool_res = [ninput_edges] + opt.pool_res
