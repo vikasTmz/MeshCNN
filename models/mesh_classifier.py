@@ -62,6 +62,10 @@ class ClassifierModel:
 
     def backward(self, out):
         print("len out: ",out.shape, self.labels.shape)
+        print("------------OUT------------")
+        print(out)
+        print("------------self.labels------------")
+        print(self.labels)
         self.loss = self.criterion(out, self.labels)
         self.loss.backward()
 
