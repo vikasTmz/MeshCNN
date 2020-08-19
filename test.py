@@ -32,7 +32,8 @@ def run_test(epoch=-1):
         out_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
 
         for i, edges in enumerate(mesh[0].org_edges):
-            gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], [gt[i,:],0])
+            print(gt[i], out[i])
+            gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], [gt[i][0], gt[i][1],0])
             gt_vcolor[edges[1]] = update_vertex_color(gt_vcolor[edges[1]], [gt[i,:],0])
 
             out_vcolor[edges[0]] = update_vertex_color(out_vcolor[edges[0]], [out[i,:],0])
