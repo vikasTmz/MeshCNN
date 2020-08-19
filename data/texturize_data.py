@@ -15,7 +15,7 @@ class TexturizeData(BaseDataset):
         self.dir = os.path.join(opt.dataroot, opt.phase)
         self.paths = self.make_dataset(self.dir)
 
-        self.nclasses = 2
+        self.nclasses = 1
         self.size = len(self.paths)
         self.get_mean_std()
         # # modify for network later.
@@ -27,7 +27,7 @@ class TexturizeData(BaseDataset):
         mesh = Mesh(file=path, opt=self.opt, hold_history=True, export_folder=self.opt.export_folder)
         meta = {}
         meta['mesh'] = mesh
-        label = mesh.edge_colors[:, 0:2]
+        label = mesh.edge_colors[:, 1]
         label = pad(label, self.opt.ninput_edges, val=-1, dim=0)
         meta['label'] = label
 
