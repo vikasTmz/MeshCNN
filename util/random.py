@@ -41,3 +41,23 @@ f.close()
 
 
 	#	c[key1] = [int((color_row[i] + c[key1][i])/2) for i in range(0,3)]
+
+file1 = open('0_red_out.obj', 'r') 
+file2 = open('0_green_out.obj', 'r') 
+file3 = open('0_blue_out.obj', 'r') 
+file4 = open('0_out.obj','w')
+R = file1.readlines() 
+G = file2.readlines() 
+B = file3.readlines() 
+
+for (l1, l2, l3) in zip(R, G, B):
+	l1_split = l1.split(' ')
+	l2_split = l2.split(' ')
+	l3_split = l3.split(' ')
+	if l1_split[0] == 'v':
+		file4.write(l1_split[0] + ' ' + l1_split[1] + ' ' + l1_split[2] + ' ' + l1_split[3] + ' ' + l1_split[4] + ' ' + l2_split[5] + ' ' + l3_split[6] + '\n')
+	else:
+		break
+
+
+file4.close()
