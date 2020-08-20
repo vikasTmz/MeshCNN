@@ -66,6 +66,7 @@ if __name__ == '__main__':
 
         if epoch % opt.run_test_freq == 0:
             # acc = run_test(epoch)
-            writer.plot_acc(acc, epoch)
+            # writer.plot_acc(acc, epoch)
+            pass
 
     writer.close()
