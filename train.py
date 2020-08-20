@@ -33,7 +33,7 @@ if __name__ == '__main__':
             model_g.set_input(data,1)
             # model_b.set_input(data,2)
 
-            # model_r.optimize_parameters()
+            model_r.optimize_parameters()
             model_g.optimize_parameters()
             # model_b.optimize_parameters()
 
