@@ -30,11 +30,11 @@ if __name__ == '__main__':
             epoch_iter += opt.batch_size
 
             model_r.set_input(data,0)
-            # model_g.set_input(data,1)
+            model_g.set_input(data,1)
             # model_b.set_input(data,2)
 
             model_r.optimize_parameters()
-            # model_g.optimize_parameters()
+            model_g.optimize_parameters()
             # model_b.optimize_parameters()
 
 
@@ -59,7 +59,7 @@ if __name__ == '__main__':
         print('End of epoch %d / %d \t Time Taken: %d sec' %
               (epoch, opt.niter + opt.niter_decay, time.time() - epoch_start_time))
         model_r.update_learning_rate()
-        # model_g.update_learning_rate()
+        model_g.update_learning_rate()
         # model_b.update_learning_rate()
         if opt.verbose_plot:
             writer.plot_model_wts(model, epoch)
