@@ -4,7 +4,6 @@ from data import DataLoader
 from models import create_model
 from util.writer import Writer
 from test import run_test
-from models.mesh_texturize import TexturizeModel
 
 if __name__ == '__main__':
     opt = TrainOptions().parse()
@@ -12,8 +11,8 @@ if __name__ == '__main__':
     dataset_size = len(dataset)
     print('#training meshes = %d' % dataset_size)
 
-    model_r = TexturizeModel(opt)
-    model_g = TexturizeModel(opt)
+    model_r = create_model(opt)
+    model_g = create_model(opt)
     # model_b = create_model(opt)
     writer = Writer(opt)
     total_steps = 0
@@ -35,7 +34,7 @@ if __name__ == '__main__':
             # model_b.set_input(data,2)
 
             model_r.optimize_parameters()
-            model_g.optimize_parameters()
+            # model_g.optimize_parameters()
             # model_b.optimize_parameters()
 
 
