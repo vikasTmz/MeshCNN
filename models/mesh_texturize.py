@@ -45,9 +45,9 @@ class TexturizeModel:
         if not self.is_train or opt.continue_train:
             self.load_network(opt.which_epoch)
 
-    def set_input(self, data):
+    def set_input(self, data, channel):
         input_edge_features = torch.from_numpy(data['edge_features']).float()
-        labels = torch.from_numpy(data['label']).float()
+        labels = torch.from_numpy(data['label'][:, channel]).float()
         # set inputs
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)

@@ -15,7 +15,9 @@ def run_test(epoch=-1):
     opt = TestOptions().parse()
     opt.serial_batches = True  # no shuffle
     dataset = DataLoader(opt)
-    model = create_model(opt)
+    model_r = create_model(opt)
+    model_g = create_model(opt)
+    model_b = create_model(opt)
     writer = Writer(opt)
 
     # colormap
@@ -24,19 +26,23 @@ def run_test(epoch=-1):
     writer.reset_counter()
     for j, data in enumerate(dataset):
         mesh = data['mesh']
-        model.set_input(data)
-        ncorrect, nexamples, out, gt = model.test()
+        model_r.set_input(data,0)
+        model_g.set_input(data,1)
+        model_b.set_input(data,2)
+        ncorrect, nexamples, out_r, gt_r = model_r.test()
+        ncorrect, nexamples, out_g, gt_g = model_g.test()
+        ncorrect, nexamples, out_b, gt_b = model_b.test()
         
         # # Save results to obj file with color
         gt_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
         out_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
 
         for i, edges in enumerate(mesh[0].org_edges):
-            gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], [gt[i]])
-            gt_vcolor[edges[1]] = update_vertex_color(gt_vcolor[edges[1]], [gt[i]])
+            gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], [gt_r[i][0], gt_g[i][0], gt_b[i][0]])
+            gt_vcolor[edges[1]] = update_vertex_color(gt_vcolor[edges[1]], [gt_r[i][0], gt_g[i][0], gt_b[i][0]])
 
-            out_vcolor[edges[0]] = update_vertex_color(out_vcolor[edges[0]], [out[i]])
-            out_vcolor[edges[1]] = update_vertex_color(out_vcolor[edges[1]], [out[i]])        
+            out_vcolor[edges[0]] = update_vertex_color(out_vcolor[edges[0]], [out_r[i][0], out_g[i][0], out_b[i][0]])
+            out_vcolor[edges[1]] = update_vertex_color(out_vcolor[edges[1]], [out_r[i][0], out_g[i][0], out_b[i][0]])        
 
         gt_vcolor = np.clip(gt_vcolor, 0, 1)
         out_vcolor = np.clip(out_vcolor, 0, 1)
