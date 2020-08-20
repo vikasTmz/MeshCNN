@@ -38,11 +38,11 @@ def run_test(epoch=-1):
         out_vcolor = np.zeros(mesh[0].vs.shape, dtype=np.float32) * -1
 
         for i, edges in enumerate(mesh[0].org_edges):
-            gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], [gt_r[i][0], gt_g[i][0], gt_b[i][0]])
-            gt_vcolor[edges[1]] = update_vertex_color(gt_vcolor[edges[1]], [gt_r[i][0], gt_g[i][0], gt_b[i][0]])
+            gt_vcolor[edges[0]] = update_vertex_color(gt_vcolor[edges[0]], [gt_r[i], gt_g[i], gt_b[i]])
+            gt_vcolor[edges[1]] = update_vertex_color(gt_vcolor[edges[1]], [gt_r[i], gt_g[i], gt_b[i]])
 
-            out_vcolor[edges[0]] = update_vertex_color(out_vcolor[edges[0]], [out_r[i][0], out_g[i][0], out_b[i][0]])
-            out_vcolor[edges[1]] = update_vertex_color(out_vcolor[edges[1]], [out_r[i][0], out_g[i][0], out_b[i][0]])        
+            out_vcolor[edges[0]] = update_vertex_color(out_vcolor[edges[0]], [out_r[i], out_g[i], out_b[i]])
+            out_vcolor[edges[1]] = update_vertex_color(out_vcolor[edges[1]], [out_r[i], out_g[i], out_b[i]])        
 
         gt_vcolor = np.clip(gt_vcolor, 0, 1)
         out_vcolor = np.clip(out_vcolor, 0, 1)
