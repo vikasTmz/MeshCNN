@@ -12,7 +12,7 @@ if __name__ == '__main__':
     print('#training meshes = %d' % dataset_size)
 
     model_r = create_model(opt)
-    # model_g = create_model(opt)
+    model_g = create_model(opt)
     # model_b = create_model(opt)
     writer = Writer(opt)
     total_steps = 0
