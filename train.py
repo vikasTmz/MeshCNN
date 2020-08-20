@@ -65,7 +65,7 @@ if __name__ == '__main__':
             writer.plot_model_wts(model, epoch)
 
         if epoch % opt.run_test_freq == 0:
-            acc = run_test(epoch)
+            # acc = run_test(epoch)
             writer.plot_acc(acc, epoch)
 
     writer.close()
