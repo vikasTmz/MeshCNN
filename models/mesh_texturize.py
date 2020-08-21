@@ -24,6 +24,7 @@ class TexturizeModel:
         self.mesh = None
         self.soft_label = None
         self.loss = None
+        self.channel = None
 
         #
         self.nclasses = opt.nclasses
@@ -46,6 +47,7 @@ class TexturizeModel:
             self.load_network(opt.which_epoch)
 
     def set_input(self, data, channel):
+        self.channel = channel
         input_edge_features = torch.from_numpy(data['edge_features']).float()
         labels = torch.from_numpy(data['label'][:, :, channel]).float()
         # set inputs
@@ -81,7 +83,7 @@ class TexturizeModel:
 
     def load_network(self, which_epoch):
         """load model from disk"""
-        save_filename = '%s_net.pth' % which_epoch
+        save_filename = '%s_%d_net.pth' % (which_epoch, self.channel)
         load_path = join(self.save_dir, save_filename)
         net = self.net
         if isinstance(net, torch.nn.DataParallel):
@@ -97,7 +99,7 @@ class TexturizeModel:
 
     def save_network(self, which_epoch):
         """save model to disk"""
-        save_filename = '%s_net.pth' % (which_epoch)
+        save_filename = '%s_%d_net.pth' % (which_epoch, self.channel)
         save_path = join(self.save_dir, save_filename)
         if len(self.gpu_ids) > 0 and torch.cuda.is_available():
             torch.save(self.net.module.cpu().state_dict(), save_path)

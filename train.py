@@ -48,6 +48,8 @@ if __name__ == '__main__':
                 print('saving the latest model (epoch %d, total_steps %d)' %
                       (epoch, total_steps))
                 model_r.save_network('latest')
+                model_g.save_network('latest')
+                model_b.save_network('latest')
 
             iter_data_time = time.time()
         if epoch % opt.save_epoch_freq == 0:
@@ -55,6 +57,10 @@ if __name__ == '__main__':
                   (epoch, total_steps))
             model_r.save_network('latest')
             model_r.save_network(epoch)
+            model_g.save_network('latest')
+            model_g.save_network(epoch)
+            model_b.save_network('latest')
+            model_b.save_network(epoch)
 
         print('End of epoch %d / %d \t Time Taken: %d sec' %
               (epoch, opt.niter + opt.niter_decay, time.time() - epoch_start_time))
