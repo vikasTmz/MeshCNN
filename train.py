@@ -11,9 +11,9 @@ if __name__ == '__main__':
     dataset_size = len(dataset)
     print('#training meshes = %d' % dataset_size)
 
-    model_r = create_model(opt)
-    model_g = create_model(opt)
-    model_b = create_model(opt)
+    model_r = create_model(opt, 0)
+    model_g = create_model(opt, 1)
+    model_b = create_model(opt, 2)
     writer = Writer(opt)
     total_steps = 0
 
@@ -29,9 +29,9 @@ if __name__ == '__main__':
             total_steps += opt.batch_size
             epoch_iter += opt.batch_size
 
-            model_r.set_input(data,0)
-            model_g.set_input(data,1)
-            model_b.set_input(data,2)
+            model_r.set_input(data)
+            model_g.set_input(data)
+            model_b.set_input(data)
 
             model_r.optimize_parameters()
             model_g.optimize_parameters()

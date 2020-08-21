@@ -12,7 +12,7 @@ class TexturizeModel:
     --dataset_mode -> texturize)
     --arch -> network type
     """
-    def __init__(self, opt):
+    def __init__(self, opt, channel):
         self.opt = opt
         self.gpu_ids = opt.gpu_ids
         self.is_train = opt.is_train
@@ -24,7 +24,7 @@ class TexturizeModel:
         self.mesh = None
         self.soft_label = None
         self.loss = None
-        self.channel = None
+        self.channel = channel
 
         #
         self.nclasses = opt.nclasses
@@ -46,10 +46,9 @@ class TexturizeModel:
         if not self.is_train or opt.continue_train:
             self.load_network(opt.which_epoch)
 
-    def set_input(self, data, channel):
-        self.channel = channel
+    def set_input(self, data):
         input_edge_features = torch.from_numpy(data['edge_features']).float()
-        labels = torch.from_numpy(data['label'][:, :, channel]).float()
+        labels = torch.from_numpy(data['label'][:, :, self.channel]).float()
         # set inputs
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)
