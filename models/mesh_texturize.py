@@ -48,7 +48,7 @@ class TexturizeModel:
 
     def set_input(self, data):
         input_edge_features = torch.from_numpy(data['edge_features']).float()
-        labels = torch.from_numpy(data['label'][:, :, self.channel]).float()
+        labels = torch.from_numpy(data['label']).float()
         # set inputs
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)
@@ -128,12 +128,3 @@ class TexturizeModel:
             gt = gt[0]
             print("TESTIME L1: for channel [", self.channel , "] ", correct*100)
         return correct, 1, out, gt
-
-    # def get_accuracy(self, pred, labels):
-    #     correct = seg_accuracy(pred, labels, self.mesh)
-    #     return correct
-
-    # def export_segmentation(self, pred_seg):
-    #     if self.opt.dataset_mode == 'segmentation':
-    #         for meshi, mesh in enumerate(self.mesh):
-    #             mesh.export_segments(pred_seg[meshi, :])
