@@ -15,9 +15,9 @@ def run_test(epoch=-1):
     opt = TestOptions().parse()
     opt.serial_batches = True  # no shuffle
     dataset = DataLoader(opt)
-    model_r = create_model(opt)
-    model_g = create_model(opt)
-    model_b = create_model(opt)
+    model_r = create_model(opt,0)
+    model_g = create_model(opt,1)
+    model_b = create_model(opt,2)
     writer = Writer(opt)
 
     # colormap
@@ -26,9 +26,9 @@ def run_test(epoch=-1):
     writer.reset_counter()
     for j, data in enumerate(dataset):
         mesh = data['mesh']
-        model_r.set_input(data,0)
-        model_g.set_input(data,1)
-        model_b.set_input(data,2)
+        model_r.set_input(data)
+        model_g.set_input(data)
+        model_b.set_input(data)
         ncorrect, nexamples, out_r, gt_r = model_r.test()
         ncorrect, nexamples, out_g, gt_g = model_g.test()
         ncorrect, nexamples, out_b, gt_b = model_b.test()
