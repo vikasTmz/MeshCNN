@@ -65,7 +65,7 @@ class TexturizeModel:
         # out = torch.cat((out1, out2, out3), 1)
         out = torch.reshape(out,self.labels.shape)
         self.loss = self.criterion(out, self.labels)
-
+        print(self.labels.shape)
         _, height = self.labels.shape
         dy = torch.abs(self.labels[:,1:] - self.labels[:,:-1])
         dyhat = torch.abs(out[:,1:] - out[:,:-1])
