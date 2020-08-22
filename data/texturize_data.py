@@ -28,6 +28,7 @@ class TexturizeData(BaseDataset):
         meta = {}
         meta['mesh'] = mesh
         label = mesh.edge_colors
+        print(label.shape)
         label = pad(label, self.opt.ninput_edges, val=-1, dim=0)
         meta['label'] = label
 

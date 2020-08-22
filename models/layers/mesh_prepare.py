@@ -172,8 +172,6 @@ def build_gemm(mesh, faces, face_areas):
     mesh.edges = np.array(edges, dtype=np.int32)
     mesh.org_edges = np.array(edges, dtype=np.int32)
     mesh.gemm_edges = np.array(edge_nb, dtype=np.int64)
-    for e in mesh.gemm_edges:
-        print(e)
     mesh.sides = np.array(sides, dtype=np.int64)
     mesh.edges_count = edges_count
     mesh.edge_areas = np.array(mesh.edge_areas, dtype=np.float32) / np.sum(face_areas) #todo whats the difference between edge_areas and edge_lenghts?
