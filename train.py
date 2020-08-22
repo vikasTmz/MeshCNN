@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
 
             if total_steps % opt.print_freq == 0:
-                loss = model_r.loss
+                loss = model_g.loss
                 t = (time.time() - iter_start_time) / opt.batch_size
                 writer.print_current_losses(epoch, epoch_iter, loss, t, t_data)
                 writer.plot_loss(loss, epoch, epoch_iter, dataset_size)
