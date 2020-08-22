@@ -67,16 +67,16 @@ class TexturizeModel:
         self.loss = self.criterion(out, self.labels)
         # tv_loss = 0
         # if (self.loss * self.opt.lambda_L1).item() < 15:
-        _, height, chan = self.labels.shape
-        dy = torch.abs(self.labels[:,1:,:] - self.labels[:,:-1,:])
-        dyhat = torch.abs(out[:,1:,:] - out[:,:-1,:])
-        tv_loss = torch.norm(dy - dyhat, 1) / height
-        print("TV Loss = ",(tv_loss * 10).item())
+        # _, height, chan = self.labels.shape
+        # dy = torch.abs(self.labels[:,1:,:] - self.labels[:,:-1,:])
+        # dyhat = torch.abs(out[:,1:,:] - out[:,:-1,:])
+        # tv_loss = torch.norm(dy - dyhat, 1) / height
+        # print("TV Loss = ",(tv_loss * 10).item())
 
-        print("L1 Loss = ",(self.loss * self.opt.lambda_L1).item())
+        # print("L1 Loss = ",(self.loss * self.opt.lambda_L1).item())
 
         if self.opt.dataset_mode == "texturize":
-            self.loss = self.loss * self.opt.lambda_L1 + tv_loss * 10
+            self.loss = self.loss * self.opt.lambda_L1 #+ tv_loss * 10
         self.loss.backward()
         # self.loss.backward(retain_graph=True)
         # self.optimizer.step()
