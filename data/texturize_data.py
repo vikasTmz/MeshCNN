@@ -4,6 +4,7 @@ from data.base_dataset import BaseDataset
 from util.util import is_mesh_file, pad
 import numpy as np
 from models.layers.mesh import Mesh
+import cv2
 
 class TexturizeData(BaseDataset):
 
@@ -28,7 +29,8 @@ class TexturizeData(BaseDataset):
         meta = {}
         meta['mesh'] = mesh
         label = mesh.edge_colors
-        print(label.shape)
+        A = np.reshape(label, (47,47,3))
+        cv2.imwrite('colors.png', A)
         label = pad(label, self.opt.ninput_edges, val=-1, dim=0)
         meta['label'] = label
 
