@@ -29,9 +29,6 @@ class TexturizeData(BaseDataset):
         meta = {}
         meta['mesh'] = mesh
         label = mesh.edge_colors
-        print(label.shape)
-        A = np.reshape(label, (2254,1,3))
-        cv2.imwrite('colors.png', A*255)
         label = pad(label, self.opt.ninput_edges, val=-1, dim=0)
         meta['label'] = label
 

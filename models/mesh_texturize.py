@@ -65,7 +65,7 @@ class TexturizeModel:
         # out = torch.cat((out1, out2, out3), 1)
         out = torch.reshape(out,self.labels.shape)
         self.loss = self.criterion(out, self.labels)
-
+        print(out.shape, self.labels.shape)
         if self.opt.dataset_mode == "texturize":
             self.loss =self.loss * self.opt.lambda_L1
         self.loss.backward()
