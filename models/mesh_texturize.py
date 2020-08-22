@@ -62,7 +62,7 @@ class TexturizeModel:
         return out
 
     def backward(self, out):
-        print("OUT>SHAPE = ",out.shape)
+        print("OUT>SHAPE = ",self.soft_label.shape)
         out = torch.reshape(out,self.labels.shape)
 
         # print("------------OUT------------")
