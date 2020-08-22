@@ -70,6 +70,7 @@ class TexturizeModel:
         dy = torch.abs(self.labels[:,1:] - self.labels[:,:-1])
         dyhat = torch.abs(out[:,1:] - out[:,:-1])
         error = torch.norm(dy - dyhat, 1) / height
+        print(self.loss * self.opt.lambda_L1, error * self.opt.lambda_L1)
         if self.opt.dataset_mode == "texturize":
             self.loss = self.loss * self.opt.lambda_L1 + error * self.opt.lambda_L1
         self.loss.backward()
