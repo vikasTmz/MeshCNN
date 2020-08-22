@@ -61,15 +61,15 @@ class TexturizeModel:
         out = self.net(self.edge_features, self.mesh)
         return out
 
-    def backward(self, out):
-        print("OUT>SHAPE = ",self.soft_label.shape)
-        out = torch.reshape(out,self.labels.shape)
+    def backward(self, out1, out2, out3):
+        out = np.concatenate((out1, out2, out3), axis=1)
+        out = torch.reshape(out,self.soft_label.shape)
 
         # print("------------OUT------------")
         # print(out)
         # print("------------self.labels------------")
         # print(self.labels)
-        self.loss = self.criterion(out, self.labels)
+        self.loss = self.criterion(out, self.soft_label)
         if self.opt.dataset_mode == "texturize":
             self.loss *= self.opt.lambda_L1
         self.loss.backward()
