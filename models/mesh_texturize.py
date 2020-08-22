@@ -62,7 +62,7 @@ class TexturizeModel:
         return out
 
     def backward(self, out1, out2, out3):
-        out = np.concatenate((out1, out2, out3), axis=1)
+        out = torch.cat((out1, out2, out3), 1)
         out = torch.reshape(out,self.soft_label.shape)
 
         # print("------------OUT------------")
