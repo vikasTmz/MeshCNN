@@ -61,27 +61,23 @@ class TexturizeModel:
         out = self.net(self.edge_features, self.mesh)
         return out
 
-    def backward(self, out1, out2, out3, out_4):
-        out = torch.cat((out1, out2, out3), 1)
-        out = torch.reshape(out,self.soft_label.shape)
-        out_4 = torch.reshape(out_4,self.labels.shape)
-        # print("------------OUT------------")
-        # print(out)
-        # print("------------self.labels------------")
-        # print(self.labels)
-        self.loss_1 = self.criterion(out, self.soft_label)
-        self.loss_2 = self.criterion(out_4, self.labels)
+    def backward(self, out):
+        # out = torch.cat((out1, out2, out3), 1)
+        out = torch.reshape(out,self.labels.shape)
+        self.loss = self.criterion(out, self.labels)
+
         if self.opt.dataset_mode == "texturize":
-            self.loss = self.loss_1 * self.opt.lambda_L1 + self.loss_2 * self.opt.lambda_L1
-        self.loss.backward(retain_graph=True)
-        self.optimizer.step()
+            self.loss =self.loss * self.opt.lambda_L1
+        self.loss.backward()
+        # self.loss.backward(retain_graph=True)
+        # self.optimizer.step()
 
     def optimize_parameters(self):
         self.optimizer.zero_grad()
         out = self.forward()
-        return out
-        # self.backward(out)
-        # self.optimizer.step()
+        # return out
+        self.backward(out)
+        self.optimizer.step()
 
 
 ##################

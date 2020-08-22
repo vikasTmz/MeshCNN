@@ -36,9 +36,6 @@ if __name__ == '__main__':
             out_r = model_r.optimize_parameters()
             out_g = model_g.optimize_parameters()
             out_b = model_b.optimize_parameters()
-            model_r.backward(out_r, out_g, out_b, out_r)
-            model_g.backward(out_r, out_g, out_b, out_g)
-            model_b.backward(out_r, out_g, out_b, out_b)
 
 
             if total_steps % opt.print_freq == 0:
