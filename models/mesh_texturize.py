@@ -76,7 +76,7 @@ class TexturizeModel:
         print("L1 Loss = ",(self.loss * self.opt.lambda_L1).item())
 
         if self.opt.dataset_mode == "texturize":
-            self.loss = self.loss * self.opt.lambda_L1 + tv_loss * self.opt.lambda_L1
+            self.loss = self.loss * self.opt.lambda_L1 + tv_loss * 10
         self.loss.backward()
         # self.loss.backward(retain_graph=True)
         # self.optimizer.step()
