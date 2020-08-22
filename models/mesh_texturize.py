@@ -63,13 +63,13 @@ class TexturizeModel:
 
     def backward(self, out):
         # out = torch.cat((out1, out2, out3), 1)
-        out = torch.reshape(out,self.soft_label.shape)
+        out = torch.reshape(out,self.labels.shape)
 
         # print("------------OUT------------")
         # print(out)
         # print("------------self.labels------------")
         # print(self.labels)
-        self.loss = self.criterion(out, self.soft_label)
+        self.loss = self.criterion(out, self.labels)
         if self.opt.dataset_mode == "texturize":
             self.loss *= self.opt.lambda_L1
         self.loss.backward(retain_graph=True)
