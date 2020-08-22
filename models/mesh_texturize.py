@@ -49,11 +49,11 @@ class TexturizeModel:
     def set_input(self, data):
         input_edge_features = torch.from_numpy(data['edge_features']).float()
         labels = torch.from_numpy(data['label'][:, :, self.channel]).float()
-        soft_label = torch.from_numpy(data['label']).float()
+        # soft_label = torch.from_numpy(data['label']).float()
         # set inputs
         self.edge_features = input_edge_features.to(self.device).requires_grad_(self.is_train)
         self.labels = labels.to(self.device)
-        self.soft_label = soft_label.to(self.device)
+        # self.soft_label = soft_label.to(self.device)
         self.mesh = data['mesh']
 
 
