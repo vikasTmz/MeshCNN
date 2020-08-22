@@ -72,7 +72,7 @@ class TexturizeModel:
         self.loss = self.criterion(out, self.soft_label)
         if self.opt.dataset_mode == "texturize":
             self.loss *= self.opt.lambda_L1
-        self.loss.backward()
+        self.loss.backward(retain_graph=True)
         self.optimizer.step()
 
     def optimize_parameters(self):
