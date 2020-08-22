@@ -42,9 +42,9 @@ f.close()
 
 	#	c[key1] = [int((color_row[i] + c[key1][i])/2) for i in range(0,3)]
 
-file1 = open('0_red_out.obj', 'r') 
-file2 = open('0_green_out.obj', 'r') 
-file3 = open('0_blue_out.obj', 'r') 
+file1 = open('0_red.obj', 'r') 
+file2 = open('0_green.obj', 'r') 
+file3 = open('0_blue.obj', 'r') 
 file4 = open('0_out.obj','w')
 R = file1.readlines() 
 G = file2.readlines() 
