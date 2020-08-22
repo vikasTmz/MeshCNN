@@ -11,9 +11,9 @@ if __name__ == '__main__':
     dataset_size = len(dataset)
     print('#training meshes = %d' % dataset_size)
 
-    # model_r = create_model(opt, 0)
+    model_r = create_model(opt, 0)
     model_g = create_model(opt, 1)
-    # model_b = create_model(opt, 2)
+    model_b = create_model(opt, 2)
     writer = Writer(opt)
     total_steps = 0
 
@@ -29,13 +29,13 @@ if __name__ == '__main__':
             total_steps += opt.batch_size
             epoch_iter += opt.batch_size
 
-            # model_r.set_input(data)
+            model_r.set_input(data)
             model_g.set_input(data)
-            # model_b.set_input(data)
+            model_b.set_input(data)
 
-            # model_r.optimize_parameters()
+            model_r.optimize_parameters()
             model_g.optimize_parameters()
-            # model_b.optimize_parameters()
+            model_b.optimize_parameters()
 
 
             if total_steps % opt.print_freq == 0:
@@ -47,26 +47,26 @@ if __name__ == '__main__':
             if i % opt.save_latest_freq == 0:
                 print('saving the latest model (epoch %d, total_steps %d)' %
                       (epoch, total_steps))
-                # model_r.save_network('latest')
+                model_r.save_network('latest')
                 model_g.save_network('latest')
-                # model_b.save_network('latest')
+                model_b.save_network('latest')
 
             iter_data_time = time.time()
         if epoch % opt.save_epoch_freq == 0:
             print('saving the model at the end of epoch %d, iters %d' %
                   (epoch, total_steps))
-            # model_r.save_network('latest')
-            # model_r.save_network(epoch)
+            model_r.save_network('latest')
+            model_r.save_network(epoch)
             model_g.save_network('latest')
             model_g.save_network(epoch)
-            # model_b.save_network('latest')
-            # model_b.save_network(epoch)
+            model_b.save_network('latest')
+            model_b.save_network(epoch)
 
         print('End of epoch %d / %d \t Time Taken: %d sec' %
               (epoch, opt.niter + opt.niter_decay, time.time() - epoch_start_time))
-        # model_r.update_learning_rate()
+        model_r.update_learning_rate()
         model_g.update_learning_rate()
-        # model_b.update_learning_rate()
+        model_b.update_learning_rate()
         if opt.verbose_plot:
             writer.plot_model_wts(model, epoch)
 
