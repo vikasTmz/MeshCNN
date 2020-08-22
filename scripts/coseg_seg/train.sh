@@ -10,7 +10,7 @@ python train.py \
 --ninput_edges 1500 \
 --pool_res 1050 600 300 \
 --resblocks 3 \
---lr 0.001 \
+--lr 0.002 \
 --batch_size 12 \
 --num_aug 20 \
 --slide_verts 0.2 \
