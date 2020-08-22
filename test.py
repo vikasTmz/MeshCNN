@@ -27,8 +27,8 @@ def run_test(epoch=-1):
     for j, data in enumerate(dataset):
         mesh = data['mesh']
         model_r.set_input(data)
-        model_g.set_input(data)
-        model_b.set_input(data)
+        # model_g.set_input(data)
+        # model_b.set_input(data)
         ncorrect, nexamples, out_r, gt_r = model_r.test()
         # ncorrect, nexamples, out_g, gt_g = model_g.test()
         # ncorrect, nexamples, out_b, gt_b = model_b.test()
