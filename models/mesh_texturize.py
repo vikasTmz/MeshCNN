@@ -39,7 +39,7 @@ class TexturizeModel:
             # SGD
             # self.optimizer = torch.optim.SGD(self.net.parameters(), lr=0.1, momentum=0.7)
             # Adam
-            self.optimizer = torch.optim.Adam(self.net.parameters(), lr=opt.lr, betas=(opt.beta1, 0.9))
+            self.optimizer = torch.optim.Adam(self.net.parameters(), lr=opt.lr, betas=(opt.beta1, 0.4))
             self.scheduler = networks.get_scheduler(self.optimizer, opt)
             print_network(self.net)
 
@@ -61,8 +61,8 @@ class TexturizeModel:
         out = self.net(self.edge_features, self.mesh)
         return out
 
-    def backward(self, out1, out2, out3):
-        out = torch.cat((out1, out2, out3), 1)
+    def backward(self, out):
+        # out = torch.cat((out1, out2, out3), 1)
         out = torch.reshape(out,self.soft_label.shape)
 
         # print("------------OUT------------")
