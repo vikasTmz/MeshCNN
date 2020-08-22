@@ -70,12 +70,14 @@ class TexturizeModel:
         if self.opt.dataset_mode == "texturize":
             self.loss *= self.opt.lambda_L1
         self.loss.backward()
+        self.optimizer.step()
 
     def optimize_parameters(self):
         self.optimizer.zero_grad()
         out = self.forward()
-        self.backward(out)
-        self.optimizer.step()
+        return out
+        # self.backward(out)
+        # self.optimizer.step()
 
 
 ##################

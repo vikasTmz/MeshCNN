@@ -161,7 +161,7 @@ class MeshPool(nn.Module):
     def __get_face_info(mesh, edge_id, side):
         key_a = mesh.gemm_edges[edge_id, side]
         key_b = mesh.gemm_edges[edge_id, side + 1]
-        print("MESH EDGE COUNT = ", mesh.edges_count)
+        # print("MESH EDGE COUNT = ", mesh.edges_count)
         side_a = mesh.sides[edge_id, side]
         side_b = mesh.sides[edge_id, side + 1]
         other_side_a = (side_a - (side_a % 2) + 2) % 4

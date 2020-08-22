@@ -33,9 +33,12 @@ if __name__ == '__main__':
             model_g.set_input(data)
             model_b.set_input(data)
 
-            model_r.optimize_parameters()
-            model_g.optimize_parameters()
-            model_b.optimize_parameters()
+            out_r = model_r.optimize_parameters()
+            out_g = model_g.optimize_parameters()
+            out_b = model_b.optimize_parameters()
+            model_r.backward(out_r)
+            model_g.backward(out_g)
+            model_b.backward(out_b)
 
 
             if total_steps % opt.print_freq == 0:
