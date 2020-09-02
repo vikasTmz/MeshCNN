@@ -68,6 +68,7 @@ class TexturizeModel:
         tv_loss = 0
         # Perform shift difference for height, -height, width, -width i.e all 4 neighbours
         # if (self.loss * self.opt.lambda_L1).item() < 15:
+        print(dir(self.mesh))
         gt_gemm = np.stack((self.labels[self.mesh.tvloss_edges[:,0]], self.labels[self.mesh.tvloss_edges[:,1]]), axis=1)
         out_gemm = np.stack((out[self.mesh.tvloss_edges[:,0]], out[self.mesh.tvloss_edges[:,1]]), axis=1)
         print(out.shape, gt_gemm.shape, out_gemm.shape)
