@@ -15,7 +15,7 @@ def fill_mesh(mesh2fill, file: str, opt):
                             filename=mesh_data.filename, sides=mesh_data.sides,
                             edge_lengths=mesh_data.edge_lengths, edge_areas=mesh_data.edge_areas,
                             features=mesh_data.features, faces = mesh_data.faces, edge_colors = mesh_data.edge_colors, 
-                            vertices = mesh_data.vertices, tvloss_edges = mesh_data.tvloss_edges)
+                            vertices = mesh_data.vertices, tvloss_edges = mesh_data.tvloss_edges, org_edges = mesh_data.org_edges)
     mesh2fill.vs = mesh_data['vs']
     #mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
     mesh2fill.edges = mesh_data['edges']
@@ -32,6 +32,7 @@ def fill_mesh(mesh2fill, file: str, opt):
     mesh2fill.edge_colors = mesh_data['edge_colors']
     mesh2fill.vertices = mesh_data['vertices']
     mesh2fill.tvloss_edges = mesh_data['tvloss_edges']
+    mesh2fill.org_edges = mesh_data['org_edges']
 
 def get_mesh_path(file: str, num_aug: int):
     filename, _ = os.path.splitext(file)
@@ -171,6 +172,7 @@ def build_gemm(mesh, faces, face_areas):
             sides[edge_key][nb_count[edge_key] - 2] = nb_count[edge2key[faces_edges[(idx + 1) % 3]]] - 1
             sides[edge_key][nb_count[edge_key] - 1] = nb_count[edge2key[faces_edges[(idx + 2) % 3]]] - 2
     mesh.edges = np.array(edges, dtype=np.int32)
+    mesh.org_edges = np.array(edges, dtype=np.int32)
     mesh.gemm_edges = np.array(edge_nb, dtype=np.int64)
     mesh.sides = np.array(sides, dtype=np.int64)
     mesh.edges_count = edges_count
