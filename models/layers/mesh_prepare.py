@@ -341,8 +341,7 @@ def get_edge_colors(mesh):
 
         else:
             for ni in range(0, 4):
-                if not np.equal(tvloss_edges,np.array([i, mesh.gemm_edges[i, ni]])).all(1).any() 
-                and not np.equal(tvloss_edges,np.array([mesh.gemm_edges[i, ni], i])).all(1).any():
+                if not np.equal(tvloss_edges,np.array([i, mesh.gemm_edges[i, ni]])).all(1).any() and not np.equal(tvloss_edges,np.array([mesh.gemm_edges[i, ni], i])).all(1).any():
                     tvloss_edges = np.row_stack((tvloss_edges, np.array([i, mesh.gemm_edges[i, ni]]) ))
 
     return np.asarray(edge_colors), tvloss_edges
