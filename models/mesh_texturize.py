@@ -72,7 +72,7 @@ class TexturizeModel:
         out_gemm = torch.stack((out[:, self.mesh[0].tvloss_edges[:,0], :], out[:, self.mesh[0].tvloss_edges[:,1], :]), axis=1)
         # print(out.shape, gt_gemm.shape, out_gemm.shape)
         _,_, height, _ = gt_gemm.shape
-        dy = torch.abs(gt_gemm[:,1:,:,:] - self.labels[:,:-1,:,:])
+        dy = torch.abs(gt_gemm[:,1:,:,:] - gt_gemm[:,:-1,:,:])
         dyhat = torch.abs(out_gemm[:,1:,:,:] - out_gemm[:,:-1,:,:])
         tv_loss = torch.norm(dy - dyhat, 1) / height
         print("TV Loss = ",(tv_loss * 10).item())
