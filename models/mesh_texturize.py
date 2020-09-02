@@ -68,19 +68,18 @@ class TexturizeModel:
         tv_loss = 0
         # Perform shift difference for height, -height, width, -width i.e all 4 neighbours
         # if (self.loss * self.opt.lambda_L1).item() < 15:
-        gt_gemm = torch.stack((self.labels[:,self.mesh[0].tvloss_edges[:,0], :], self.labels[:, self.mesh[0].tvloss_edges[:,1], :]), axis=1)
-        out_gemm = torch.stack((out[:, self.mesh[0].tvloss_edges[:,0], :], out[:, self.mesh[0].tvloss_edges[:,1], :]), axis=1)
-        # print(out.shape, gt_gemm.shape, out_gemm.shape)
-        _,_, height, _ = gt_gemm.shape
-        dy = torch.abs(gt_gemm[:,1:,:,:] - gt_gemm[:,:-1,:,:])
-        dyhat = torch.abs(out_gemm[:,1:,:,:] - out_gemm[:,:-1,:,:])
-        tv_loss = torch.norm(dy - dyhat, 1) / height
-        print("TV Loss = ",(tv_loss * self.opt.lambda_L1).item())
+        # gt_gemm = torch.stack((self.labels[:,self.mesh[0].tvloss_edges[:,0], :], self.labels[:, self.mesh[0].tvloss_edges[:,1], :]), axis=1)
+        # out_gemm = torch.stack((out[:, self.mesh[0].tvloss_edges[:,0], :], out[:, self.mesh[0].tvloss_edges[:,1], :]), axis=1)
+        # _,_, height, _ = gt_gemm.shape
+        # dy = torch.abs(gt_gemm[:,1:,:,:] - gt_gemm[:,:-1,:,:])
+        # dyhat = torch.abs(out_gemm[:,1:,:,:] - out_gemm[:,:-1,:,:])
+        # tv_loss = torch.norm(dy - dyhat, 1) / height
+        # print("TV Loss = ",(tv_loss * self.opt.lambda_L1).item())
 
-        print("L1 Loss = ",(self.loss * self.opt.lambda_L1).item())
+        # print("L1 Loss = ",(self.loss * self.opt.lambda_L1).item())
 
         if self.opt.dataset_mode == "texturize":
-            self.loss = self.loss * self.opt.lambda_L1 + tv_loss * self.opt.lambda_L1
+            self.loss = self.loss * self.opt.lambda_L1 #+ tv_loss * self.opt.lambda_L1
         self.loss.backward()
         # self.loss.backward(retain_graph=True)
         # self.optimizer.step()
