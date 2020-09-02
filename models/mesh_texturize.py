@@ -68,8 +68,8 @@ class TexturizeModel:
         tv_loss = 0
         # Perform shift difference for height, -height, width, -width i.e all 4 neighbours
         # if (self.loss * self.opt.lambda_L1).item() < 15:
-        gt_gemm = np.stack((self.labels[self.mesh[0].tvloss_edges[:,0]], self.labels[self.mesh[0].tvloss_edges[:,1]]), axis=1)
-        out_gemm = np.stack((out[self.mesh[0].tvloss_edges[:,0]], out[self.mesh[0].tvloss_edges[:,1]]), axis=1)
+        gt_gemm = torch.stack((self.labels[self.mesh[0].tvloss_edges[:,0]], self.labels[self.mesh[0].tvloss_edges[:,1]]), axis=1)
+        out_gemm = torch.stack((out[self.mesh[0].tvloss_edges[:,0]], out[self.mesh[0].tvloss_edges[:,1]]), axis=1)
         print(out.shape, gt_gemm.shape, out_gemm.shape)
         # _, height, chan = self.labels.shape
         # dy = torch.abs(self.labels[:,1:,:] - self.labels[:,:-1,:])
