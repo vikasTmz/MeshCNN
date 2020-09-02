@@ -3,4 +3,4 @@ Current
 
 Last
 - lowest edge count 
-- irregularity and edge length test
+- irregularity and edge length test (try high poly mesh (with texture), fails in low poly)
