@@ -71,7 +71,6 @@ def from_scratch(file, opt):
         post_augmentation(mesh_data, opt)
     mesh_data.features = extract_features(mesh_data)
     mesh_data.edge_colors, mesh_data.tvloss_edges = get_edge_colors(mesh_data)
-    print(mesh_data.tvloss_edges)
     return mesh_data
 
 def fill_from_file(mesh, file):
