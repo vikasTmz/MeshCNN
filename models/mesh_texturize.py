@@ -140,5 +140,4 @@ class TexturizeModel:
             out = np.clip(out[0], 0, 1)
             gt = self.labels.cpu().detach().numpy()
             gt = gt[0]
-            print("TESTIME L1: for channel [", self.channel , "] ", correct*100)
         return correct, 1, out, gt
