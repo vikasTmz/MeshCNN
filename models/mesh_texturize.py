@@ -75,7 +75,7 @@ class TexturizeModel:
         dy = torch.abs(gt_gemm[:,1:,:,:] - gt_gemm[:,:-1,:,:])
         dyhat = torch.abs(out_gemm[:,1:,:,:] - out_gemm[:,:-1,:,:])
         tv_loss = torch.norm(dy - dyhat, 1) / height
-        print("TV Loss = ",(tv_loss * 10).item())
+        print("TV Loss = ",(tv_loss * self.opt.lambda_L1).item())
 
         print("L1 Loss = ",(self.loss * self.opt.lambda_L1).item())
 
