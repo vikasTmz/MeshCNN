@@ -15,7 +15,7 @@ def fill_mesh(mesh2fill, file: str, opt):
                             filename=mesh_data.filename, sides=mesh_data.sides,
                             edge_lengths=mesh_data.edge_lengths, edge_areas=mesh_data.edge_areas,
                             features=mesh_data.features, faces = mesh_data.faces, edge_colors = mesh_data.edge_colors, 
-                            vertices = mesh_data.vertices, org_edges = mesh_data.edges)
+                            vertices = mesh_data.vertices, tvloss_edges = mesh_data.tvloss_edges)
     mesh2fill.vs = mesh_data['vs']
     #mesh2fill.colors = mesh_data['colors'] # colors=mesh_data.colors,
     mesh2fill.edges = mesh_data['edges']
@@ -31,7 +31,7 @@ def fill_mesh(mesh2fill, file: str, opt):
     mesh2fill.faces = mesh_data['faces']
     mesh2fill.edge_colors = mesh_data['edge_colors']
     mesh2fill.vertices = mesh_data['vertices']
-    mesh2fill.org_edges = mesh_data['edges']
+    mesh2fill.tvloss_edges = mesh_data['tvloss_edges']
 
 def get_mesh_path(file: str, num_aug: int):
     filename, _ = os.path.splitext(file)
@@ -51,7 +51,7 @@ def from_scratch(file, opt):
 
     mesh_data = MeshPrep()
     mesh_data.vs = mesh_data.edges = mesh_data.colors = mesh_data.edge_colors = None
-    mesh_data.gemm_edges = mesh_data.sides = mesh_data.faces = None
+    mesh_data.gemm_edges = mesh_data.sides = mesh_data.faces = mesh_data.tvloss_edges = None
     mesh_data.edges_count = None
     mesh_data.ve = None
     mesh_data.v_mask = None
@@ -69,7 +69,8 @@ def from_scratch(file, opt):
     if opt.num_aug > 1:
         post_augmentation(mesh_data, opt)
     mesh_data.features = extract_features(mesh_data)
-    mesh_data.edge_colors = get_edge_colors(mesh_data)
+    mesh_data.edge_colors, mesh_data.tvloss_edges = get_edge_colors(mesh_data)
+    print(mesh_data.tvloss_edges)
     return mesh_data
 
 def fill_from_file(mesh, file):
@@ -170,7 +171,6 @@ def build_gemm(mesh, faces, face_areas):
             sides[edge_key][nb_count[edge_key] - 2] = nb_count[edge2key[faces_edges[(idx + 1) % 3]]] - 1
             sides[edge_key][nb_count[edge_key] - 1] = nb_count[edge2key[faces_edges[(idx + 2) % 3]]] - 2
     mesh.edges = np.array(edges, dtype=np.int32)
-    mesh.org_edges = np.array(edges, dtype=np.int32)
     mesh.gemm_edges = np.array(edge_nb, dtype=np.int64)
     mesh.sides = np.array(sides, dtype=np.int64)
     mesh.edges_count = edges_count
@@ -323,14 +323,29 @@ def set_edge_lengths(mesh, edge_points=None):
 
 def get_edge_colors(mesh):
     edge_colors = []
+    tvloss_edges = np.array([])
     edge_points = get_edge_points(mesh)
     edge_lengths = np.linalg.norm(mesh.vs[edge_points[:, 0]] - mesh.vs[edge_points[:, 1]], ord=2, axis=1)
     for i in range(len(edge_lengths)):
+        # adding edge colors
         avg_color = [(mesh.colors[edge_points[i, 0]][0] + mesh.colors[edge_points[i, 1]][0]) / 2, 
                      (mesh.colors[edge_points[i, 0]][1] + mesh.colors[edge_points[i, 1]][1]) / 2,
                      (mesh.colors[edge_points[i, 0]][2] + mesh.colors[edge_points[i, 1]][2]) / 2]
         edge_colors.append(avg_color)
-    return np.asarray(edge_colors)
+
+        # creating tv loss edge neighbours (nx2)
+        if tvloss_edges.shape[0] == 0:
+            tvloss_edges = np.array([i, mesh.gemm_edges[i,0]])
+            for ni in range(1,4):
+                tvloss_edges = np.row_stack((tvloss_edges, np.array([i, mesh.gemm_edges[i, ni]]) ))
+
+        else:
+            for ni in range(0, 4):
+                if not np.equal(tvloss_edges,np.array([i, mesh.gemm_edges[i, ni]])).all(1).any() 
+                and not np.equal(tvloss_edges,np.array([mesh.gemm_edges[i, ni], i])).all(1).any():
+                    tvloss_edges = np.row_stack((tvloss_edges, np.array([i, mesh.gemm_edges[i, ni]]) ))
+
+    return np.asarray(edge_colors), tvloss_edges
 
 def extract_features(mesh):
     features = []

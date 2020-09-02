@@ -1,0 +1,5 @@
+Current
+- Test TV loss on all 4 directions
+
+Last
+- 

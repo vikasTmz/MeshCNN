@@ -66,6 +66,7 @@ class TexturizeModel:
         out = torch.reshape(out,self.labels.shape)
         self.loss = self.criterion(out, self.labels)
         # tv_loss = 0
+        # Perform shift difference for height, -height, width, -width i.e all 4 neighbours
         # if (self.loss * self.opt.lambda_L1).item() < 15:
         # _, height, chan = self.labels.shape
         # dy = torch.abs(self.labels[:,1:,:] - self.labels[:,:-1,:])
