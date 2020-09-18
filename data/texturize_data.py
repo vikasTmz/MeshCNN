@@ -16,7 +16,7 @@ class TexturizeData(BaseDataset):
         self.dir = os.path.join(opt.dataroot, opt.phase)
         self.paths = self.make_dataset(self.dir)
 
-        self.nclasses = 1
+        self.nclasses = 3
         self.size = len(self.paths)
         self.get_mean_std()
         # # modify for network later.
