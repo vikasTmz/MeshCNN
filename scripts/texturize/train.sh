@@ -14,7 +14,7 @@ python train.py \
 --batch_size 12 \
 --num_aug 20 \
 --slide_verts 0 \
-
+--export_folder 'intermediate_meshes'
 
 #
 # python train.py --dataroot datasets/coseg_vases --name coseg_vases --arch meshunet --dataset_mode
